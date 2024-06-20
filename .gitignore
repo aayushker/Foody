@@ -1,0 +1,35 @@
+# Next.js
+node_modules
+.next
+out
+
+# Django
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+*.swp
+*.swo
+*.log
+*.sqlite3
+*.db
+*.pyc
+*.pyo
+*.pyd
+*.swp
+*.swo
+*.log
+*.sqlite3
+*.db
+*.env
+*.env.*
+*.pyc
+*.pyo
+*.pyd
+*.swp
+*.swo
+*.log
+*.sqlite3
+*.db
+*.env
+*.env.*
