@@ -1,10 +1,12 @@
 import React from 'react'
 import Image from 'next/image'
+import HeroImage from './uiEle/HeroImage'
 
 const Hero = () => {
   return (
-    <div>
-      <Image src={'/images/hero.jpg'} alt='hero' width={1920} height={1080} />
+    <div className='flex'>
+      <HeroImage />
+      <p>Share and learn new recipes</p>
     </div>
   )
 }
