@@ -4,11 +4,11 @@ import Link from "next/link";
 const NavBar = () => {
   const bool = true;
   return (
-    <div className=" p-4 flex justify-between bg-gradient-to-r from-green-300 via-green-400 to-green-300">
+    <div className=" p-4 flex justify-between bg-gradient-to-r from-orange-300 via-orange-100 to-green-300">
       <h1 className="">
         <Link href={"/"}>Foody</Link>
       </h1>
-      <ul className=" flex space-x-6 justify-around ">
+      <ul className=" flex space-x-12 justify-around ">
         <li>
           <Link href={"/"}>Home</Link>
         </li>
