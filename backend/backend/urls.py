@@ -16,8 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
+# from SMTP import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('recipes.urls')),
+    path('api/', include('SMTP.urls')),
+    # path('', views.form, name='form'),
 ]

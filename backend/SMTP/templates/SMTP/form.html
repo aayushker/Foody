@@ -113,7 +113,7 @@
 
   <body>
     <h1>Simple Form</h1>
-    <form class="cf" method="POST" action="{% url 'form' %}">
+    <form class="cf" method="POST" action="{% url 'smtp' %}">
       {% csrf_token %}
       <div class="half left cf">
         <input type="text" id="input-name" name="name" placeholder="Name" />
