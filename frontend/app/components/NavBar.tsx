@@ -1,16 +1,26 @@
 "use client";
 import React from "react";
 import { sign } from "crypto";
-import {Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Input, DropdownItem, DropdownTrigger, Dropdown, DropdownMenu, Avatar} from "@nextui-org/react";
-
+import {
+  Navbar,
+  NavbarBrand,
+  NavbarContent,
+  NavbarItem,
+  Link,
+  Input,
+  DropdownItem,
+  DropdownTrigger,
+  Dropdown,
+  DropdownMenu,
+  Avatar,
+} from "@nextui-org/react";
 
 const NavBar = () => {
-  const sign = () => {
-    
-  };
+  const sign = () => {};
   const bool = true;
+  const isLogged = false;
   return (
-<Navbar>
+    <Navbar>
       <NavbarBrand>
         <p className="font-bold text-inherit">Foodie</p>
       </NavbarBrand>
@@ -47,6 +57,7 @@ const NavBar = () => {
             />
           </DropdownTrigger>
           <DropdownMenu aria-label="Profile Actions" variant="flat">
+            
             <DropdownItem key="profile" className="h-14 gap-2">
               <p className="font-semibold">Signed in as</p>
               <p className="font-semibold">zoey@example.com</p>
