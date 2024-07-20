@@ -14,10 +14,12 @@ import {
 } from '@nextui-org/react';
 import { useAuth } from '../AuthContext';
 import SignIn from './ui/SignIn';
+import SignUp from './ui/SignUp';
 
-const NavBar = () => {
+const NavBar: React.FC = () => {
   const { isLogged, signOut } = useAuth();
-  const [isSignInOpen, setIsSignInOpen] = useState(false); // This controls the modal
+  const [isSignInOpen, setIsSignInOpen] = useState(false);
+  const [isSignUpOpen, setIsSignUpOpen] = useState(false);
 
   const handleSignInOpen = () => {
     setIsSignInOpen(true);
@@ -25,6 +27,14 @@ const NavBar = () => {
 
   const handleSignInClose = () => {
     setIsSignInOpen(false);
+  };
+
+  const handleSignUpOpen = () => {
+    setIsSignUpOpen(true);
+  };
+
+  const handleSignUpClose = () => {
+    setIsSignUpOpen(false);
   };
 
   return (
@@ -82,12 +92,14 @@ const NavBar = () => {
             ) : (
               <DropdownMenu aria-label="Profile Actions" variant="flat">
                 <DropdownItem onPress={handleSignInOpen}>Log In</DropdownItem>
+                <DropdownItem onPress={handleSignUpOpen}>Sign Up</DropdownItem>
               </DropdownMenu>
             )}
           </Dropdown>
         </NavbarContent>
       </Navbar>
       <SignIn isOpen={isSignInOpen} onClose={handleSignInClose} />
+      <SignUp isOpen={isSignUpOpen} onClose={handleSignUpClose} />
     </>
   );
 };

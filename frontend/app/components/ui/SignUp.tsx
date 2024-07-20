@@ -1,31 +1,134 @@
-import React from 'react';
-import { Input, Button } from '@nextui-org/react';
+"use client";
+import React, { useState } from 'react';
+import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Button,
+  Checkbox,
+  Input,
+  Link,
+} from '@nextui-org/react';
+import { MailIcon } from './MailIcon.jsx';
+import { LockIcon } from './LockIcon.jsx';
+import { useAuth } from '../../AuthContext';
 
-const BurgerLoginForm = () => {
+interface SignUpProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+const SignUp: React.FC<SignUpProps> = ({ isOpen, onClose }) => {
+  const { signUp } = useAuth();
+  
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleSignUp = () => {
+    // Perform sign-up logic here, including any validation
+    if (formData.password !== formData.confirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
+    signUp(formData.email, formData.password);
+    onClose(); // Close the modal after signing up
+  };
+
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', backgroundColor: '#f0e68c' }}>
-      <div style={{ position: 'relative', width: '300px', height: '350px', backgroundColor: '#ffe5b4', borderRadius: '50% 50% 0 0', overflow: 'hidden', boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)' }}>
-        {/* Top Bun */}
-        <div style={{ position: 'absolute', top: '0', left: '0', right: '0', height: '50px', backgroundColor: '#ffcc00', borderRadius: '50% 50% 0 0' }} />
-
-        {/* Lettuce */}
-        <div style={{ position: 'absolute', top: '50px', left: '0', right: '0', height: '20px', backgroundColor: '#00cc00', borderRadius: '0 0 50% 50%' }} />
-
-        {/* Patty */}
-        <div style={{ position: 'absolute', top: '70px', left: '0', right: '0', height: '50px', backgroundColor: '#663300' }} />
-
-        {/* Form Fields */}
-        <div style={{ position: 'absolute', top: '120px', left: '10%', right: '10%', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-          <Input placeholder="Username" style={{ backgroundColor: 'white', borderRadius: '10px' }} />
-          <Input  type="password" placeholder="Password" style={{ backgroundColor: 'white', borderRadius: '10px' }} />
-          <Button style={{ borderRadius: '10px' }}>Login</Button>
-        </div>
-
-        {/* Bottom Bun */}
-        <div style={{ position: 'absolute', bottom: '0', left: '0', right: '0', height: '100px', backgroundColor: '#ffcc00', borderRadius: '0 0 50% 50%' }} />
-      </div>
-    </div>
+    <Modal isOpen={isOpen} onOpenChange={onClose} placement="top-center">
+      <ModalContent>
+        <>
+          <ModalHeader className="flex flex-col gap-1">Sign Up</ModalHeader>
+          <ModalBody>
+            <Input
+              autoFocus
+              name="firstName"
+              value={formData.firstName}
+              onChange={handleChange}
+              label="First Name"
+              placeholder="Enter your first name"
+              variant="bordered"
+            />
+            <Input
+              name="lastName"
+              value={formData.lastName}
+              onChange={handleChange}
+              label="Last Name"
+              placeholder="Enter your last name"
+              variant="bordered"
+            />
+            <Input
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              endContent={
+                <MailIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
+              }
+              label="Email"
+              placeholder="Enter your email"
+              variant="bordered"
+            />
+            <Input
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              endContent={
+                <LockIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
+              }
+              label="Password"
+              placeholder="Enter your password"
+              type="password"
+              variant="bordered"
+            />
+            <Input
+              name="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              endContent={
+                <LockIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
+              }
+              label="Confirm Password"
+              placeholder="Confirm your password"
+              type="password"
+              variant="bordered"
+            />
+            <div className="flex py-2 px-1 justify-between">
+              <Checkbox
+                classNames={{
+                  label: 'text-small',
+                }}
+              >
+                Remember me
+              </Checkbox>
+            </div>
+          </ModalBody>
+          <ModalFooter>
+            <Button color="danger" variant="flat" onPress={onClose}>
+              Close
+            </Button>
+            <Button color="primary" onPress={handleSignUp}>
+              Sign Up
+            </Button>
+          </ModalFooter>
+        </>
+      </ModalContent>
+    </Modal>
   );
 };
 
-export default BurgerLoginForm;
+export default SignUp;
