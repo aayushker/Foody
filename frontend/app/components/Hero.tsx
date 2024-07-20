@@ -1,17 +1,17 @@
 import React from "react";
 import Image from "next/image";
-import HeroImage from "./uiEle/HeroImage";
+import HeroImage from "./ui/HeroImage";
 
 const Hero = () => {
   return (
     <div>
       <HeroImage />
-      <div className="absolute inset-0 flex flex-col justify-center p-6 space-y-4 rounded-lg">
-        <p className="text-6xl font-bold drop-shadow-md bg-clip-text text-transparent animate-gradient">
+      <div className="z-1 absolute inset-0 flex flex-col justify-center p-6 space-y-4 rounded-lg">
+        <p className="z-5 text-6xl font-bold drop-shadow-md bg-clip-text  animate-gradient">
           <strong className="text-9xl">Share</strong> and{" "}
           <strong className="text-8xl">Learn</strong>
         </p>
-        <p className="text-6xl font-bold drop-shadow-md bg-clip-text text-transparent animate-gradient">
+        <p className="text-6xl font-bold drop-shadow-md bg-clip-text animate-gradient">
           New Recipes
         </p>
         <p className="text-white text-2xl font-medium drop-shadow-md">
