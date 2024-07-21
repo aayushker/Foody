@@ -11,9 +11,9 @@ import {
   Input,
   Link,
 } from '@nextui-org/react';
-import { MailIcon } from './MailIcon.jsx';
-import { LockIcon } from './LockIcon.jsx';
-import { useAuth } from '../../AuthContext';
+import { MailIcon } from '../icons/MailIcon.jsx';
+import { LockIcon } from '../icons/LockIcon.jsx';
+import { useAuth } from '../../../AuthContext';
 
 interface SignUpProps {
   isOpen: boolean;

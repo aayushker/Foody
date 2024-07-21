@@ -7,7 +7,7 @@ export default function App() {
       width={1920}
       alt="Hero Image"
       src="/images/hero.jpg"
-      className="z-0 h-screen object-cover overflow-hidden border-none border-r-0"
+      className="z-0 h-screen object-cover overflow-hidden"
     />
   );
 }
