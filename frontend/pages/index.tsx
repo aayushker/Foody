@@ -1,9 +1,10 @@
 "use client";
-import NavBar from "./components/NavBar";
-import Hero from "./components/Hero";
-import Contact from "./components/Contact";
-import { AuthProvider } from "./AuthContext";
+import NavBar from "../app/components/NavBar";
+import Hero from "../app/components/Hero";
+import Contact from "../app/components/Contact";
+import { AuthProvider } from "../app/AuthContext";
 import { useState } from "react";
+import "@/app/globals.css";
 
 export default function Home() {
   const [isSignInOpen, setIsSignInOpen] = useState(false);

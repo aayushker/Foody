@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import { NextUIProvider } from "@nextui-org/react";
-import "./globals.css";
 
 const inter = Roboto({ subsets: ["latin"], weight: ["400", "500", "700"] });
 
@@ -18,7 +17,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-          <NextUIProvider>{children}</NextUIProvider>
+        <NextUIProvider>{children}</NextUIProvider>
       </body>
     </html>
   );
