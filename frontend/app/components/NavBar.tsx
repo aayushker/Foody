@@ -47,9 +47,9 @@ const NavBar: React.FC = () => {
 
   return (
     <>
-      <Navbar>
+      <Navbar maxWidth="full">
         <NavbarBrand>
-          <Link href="#">
+          <Link href="/">
             <p className="font-bold text-inherit">Foodie</p>
           </Link>
         </NavbarBrand>
@@ -160,7 +160,7 @@ const NavBar: React.FC = () => {
                 </DropdownItem>
                 <DropdownItem>My Recipe</DropdownItem>
                 <DropdownItem>Favorites</DropdownItem>
-                <DropdownItem color="success">Add Recipe</DropdownItem>
+                <DropdownItem color="success"><Link href="/addRecipe">Add Recipe</Link></DropdownItem>
                 <DropdownItem color="danger" onPress={signOut}>
                   Log Out
                 </DropdownItem>

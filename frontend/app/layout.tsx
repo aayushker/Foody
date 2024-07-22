@@ -4,7 +4,7 @@ import { NextUIProvider } from "@nextui-org/react";
 
 const inter = Roboto({ subsets: ["latin"], weight: ["400", "500", "700"] });
 
-export const metadata: Metadata = {
+const metadata: Metadata = {
   title: "Foody",
   description: "A recipe sharing platform",
 };
