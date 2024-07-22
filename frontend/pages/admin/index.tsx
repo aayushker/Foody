@@ -1,11 +1,13 @@
-import React from 'react'
+import React from "react";
+import AdminLayout from "@/app/adminLayout";
+import AdminSidebar from "@/app/components/Admin/AdminSidebar";
 
-const index = () => {
+const Index = () => {
   return (
-    <div>
-      Hello World
-    </div>
-  )
-}
+    <AdminLayout>
+      <AdminSidebar />
+    </AdminLayout>
+  );
+};
 
-export default index
+export default Index;

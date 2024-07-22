@@ -7,11 +7,11 @@ const Hero = () => {
     <div>
       <HeroImage />
       <div className="z-1 absolute inset-0 flex flex-col justify-center p-6 space-y-4 rounded-lg">
-        <p className="z-5 text-6xl font-bold drop-shadow-md bg-clip-text  animate-gradient">
+        <p className="text-white z-5 text-6xl font-bold drop-shadow-md bg-clip-text  animate-gradient">
           <strong className="text-9xl">Share</strong> and{" "}
           <strong className="text-8xl">Learn</strong>
         </p>
-        <p className="text-6xl font-bold drop-shadow-md bg-clip-text animate-gradient">
+        <p className="text-white text-6xl font-bold drop-shadow-md bg-clip-text animate-gradient">
           New Recipes
         </p>
         <p className="text-white text-2xl font-medium drop-shadow-md">
