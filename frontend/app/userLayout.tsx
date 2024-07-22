@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   description: "A recipe sharing platform",
 };
 
-export default function AdminLayout({
+export default function UserLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

@@ -155,7 +155,9 @@ const NavBar: React.FC = () => {
                   <p className="font-semibold">Hello👋,</p>
                   <p className="font-semibold">User Name</p>
                 </DropdownItem>
-                <DropdownItem>Dashboard</DropdownItem>
+                <DropdownItem>
+                  <Link href="/user">Dashboard</Link>
+                </DropdownItem>
                 <DropdownItem>My Recipe</DropdownItem>
                 <DropdownItem>Favorites</DropdownItem>
                 <DropdownItem color="success">Add Recipe</DropdownItem>
