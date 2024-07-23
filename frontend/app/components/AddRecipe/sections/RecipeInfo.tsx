@@ -11,10 +11,16 @@ import { set } from "jodit/types/core/helpers";
 
 const RecipeInfo = () => {
   const [selectedKeys, setSelectedKeys] = React.useState(new Set(["select"]));
+  const [selectedCuisine, setSelectedCuisine] = React.useState(new Set(["select"]));
 
   const selectedValue = React.useMemo(
     () => Array.from(selectedKeys).join(", ").replaceAll("_", " "),
     [selectedKeys]
+  );
+
+  const selectedCuisineValue = React.useMemo(
+    () => Array.from(selectedCuisine).join(", ").replaceAll("_", " "),
+    [selectedCuisine]
   );
 
   return (
@@ -31,7 +37,7 @@ const RecipeInfo = () => {
         label="Recipe Name"
         labelPlacement="outside-left"
         placeholder="Enter a tasty name for your recipe"
-        className="max-w-md p-6"
+        className="max-w-md"
         minRows={1}
         maxRows={1}
       />
@@ -41,7 +47,7 @@ const RecipeInfo = () => {
         label="Description"
         labelPlacement="outside-left"
         placeholder="Here, you can add a short and sweet catchy summary for your recipes to grab your readers attention."
-        className="max-w-lg p-6"
+        className="max-w-lg"
         minRows={5}
       />
 
@@ -58,7 +64,7 @@ const RecipeInfo = () => {
         }
         maxLength={1}
         width={1}
-        className="max-w-xs p-6"
+        className="max-w-xs"
         description="Please add the total time in minutes (Required)"
       />
 
@@ -74,7 +80,7 @@ const RecipeInfo = () => {
         }
         maxLength={1}
         width={1}
-        className="max-w-xs p-6"
+        className="max-w-xs"
         description="Please add the total calories (Optional)"
       />
 
@@ -86,12 +92,22 @@ const RecipeInfo = () => {
         labelPlacement="outside-left"
         maxLength={1}
         width={1}
-        className="max-w-xs p-6"
+        className="max-w-xs"
         description="Please tell the total servings (Required)"
       />
 
+
+      <Textarea
+        isRequired
+        label="Tags"
+        labelPlacement="outside-left"
+        placeholder="Add some tags to help your readers find your recipe"
+        className="max-w-lg"
+        minRows={3}
+      />
+
       <p>Difficulty Level</p>
-      <div className="px-16 py-2">
+      <div className="px-16 py-1">
         <Dropdown className=" w-10 " dir="top-left">
           <DropdownTrigger>
             <Button variant="bordered" className="capitalize">
@@ -99,7 +115,6 @@ const RecipeInfo = () => {
             </Button>
           </DropdownTrigger>
           <DropdownMenu
-            aria-label="Single selection example"
             variant="flat"
             disallowEmptySelection
             selectionMode="single"
@@ -109,6 +124,31 @@ const RecipeInfo = () => {
             <DropdownItem key="Beginner">Beginner</DropdownItem>
             <DropdownItem key="Intermediate">Intermediate</DropdownItem>
             <DropdownItem key="Advanced">Advanced</DropdownItem>
+          </DropdownMenu>
+        </Dropdown>
+      </div>
+
+      <p>Types of Cuisine</p>
+      <div className="px-16 py-1">
+        <Dropdown className=" w-10 " dir="top-left">
+          <DropdownTrigger>
+            <Button variant="bordered" className="capitalize">
+              {selectedValue}
+            </Button>
+          </DropdownTrigger>
+          <DropdownMenu
+            variant="flat"
+            disallowEmptySelection
+            selectionMode="single"
+            selectedKeys={selectedCuisine}
+            onSelectionChange={setSelectedCuisine}
+          >
+            <DropdownItem key="Beginner">Indian Cuisine</DropdownItem>
+            <DropdownItem key="Intermediate">Italian Cuisine</DropdownItem>
+            <DropdownItem key="Advanced">Japanese Cuisine</DropdownItem>
+            <DropdownItem key="Advanced">Thai Cuisine</DropdownItem>
+            <DropdownItem key="Advanced">French Cuisine</DropdownItem>
+            <DropdownItem key="Advanced">Mexican Cuisine</DropdownItem>
           </DropdownMenu>
         </Dropdown>
       </div>
