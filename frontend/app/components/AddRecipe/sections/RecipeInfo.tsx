@@ -19,11 +19,11 @@ const RecipeInfo = () => {
 
   return (
     <>
-      <p className="text-black text-4xl font-semibold drop-shadow-md bg-clip-text animate-gradient">
+      <p className="text-black text-2xl font-semibold drop-shadow-md bg-clip-text animate-gradient">
         Add something tasty 😋
       </p>
-      <p className="text-black text-lg drop-shadow-md">
-        Add some details so we can know what are you cooking today!
+      <p className="text-black text-md drop-shadow-md">
+        Add some details to tell us what you're cooking up! 🍳
       </p>
 
       <Textarea

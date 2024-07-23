@@ -65,7 +65,7 @@ const Ingredients = () => {
         Ingredients 🥦
       </p>
       <p className="text-black text-md drop-shadow-md">
-        Add the ingredients you need to make your recipe.
+        Add ingredients to your recipe! 🍽
       </p>
 
       <div className="flex gap-2 mb-4">
