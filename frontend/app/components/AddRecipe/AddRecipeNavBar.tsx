@@ -62,12 +62,12 @@ const AddRecipeNavBar: React.FC = () => {
           </NavbarItem>
           <NavbarItem>
             <Link href="#" aria-current="page" color="foreground">
-              Your Recipes
+              My Recipes
             </Link>
           </NavbarItem>
           <NavbarItem>
             <Link color="foreground" href="#">
-              Contact Us
+              Top Recipes
             </Link>
           </NavbarItem>
         </NavbarContent>
@@ -95,6 +95,7 @@ const AddRecipeNavBar: React.FC = () => {
               </DropdownItem>
               <DropdownItem>My Recipes</DropdownItem>
               <DropdownItem>Favorites</DropdownItem>
+              <DropdownItem>Settings</DropdownItem>
               <DropdownItem color="danger" onPress={signOut}>
                 Log Out
               </DropdownItem>
