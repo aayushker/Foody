@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import {
   Table,
@@ -12,15 +13,11 @@ import {
   PopoverTrigger,
   PopoverContent,
 } from "@nextui-org/react";
-import { CornerDownLeft } from "lucide-react";
-
-// Known issue: the popover is getting displayed at the top left CornerDownLeft
-// and if you will add more contents then the page can display then they will not appear
+import { useIngredients } from "../../context/IngredientsContext";
 
 const Ingredients = () => {
-  const [ingredients, setIngredients] = useState<
-    { quantity: string; unit: string; ingredient: string; notes: string }[]
-  >([]);
+  const { ingredients, setIngredients } = useIngredients();
+
   const [newIngredient, setNewIngredient] = useState({
     quantity: "",
     unit: "",
@@ -39,24 +36,24 @@ const Ingredients = () => {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
   const addIngredient = () => {
-    const { quantity, unit, ingredient } = newIngredient;
-    if (!quantity || !unit || !ingredient) {
+    if (!newIngredient.quantity || !newIngredient.unit || !newIngredient.ingredient) {
       setIsPopoverOpen(true);
       return;
     }
-    setIngredients((prevIngredients) => [...prevIngredients, newIngredient]);
+
+    setIngredients([...ingredients, newIngredient]);
     setNewIngredient({
       quantity: "",
       unit: "",
       ingredient: "",
       notes: "",
     });
+    setIsPopoverOpen(false);
   };
 
   const removeIngredient = (index: number) => {
-    setIngredients((prevIngredients) =>
-      prevIngredients.filter((_, i) => i !== index)
-    );
+    const updatedIngredients = ingredients.filter((_, i) => i !== index);
+    setIngredients(updatedIngredients);
   };
 
   return (
