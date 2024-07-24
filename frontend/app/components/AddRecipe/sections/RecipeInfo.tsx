@@ -1,26 +1,20 @@
-import React from "react";
-import { Input, Textarea, TimeInput } from "@nextui-org/react";
-import {
-  Dropdown,
-  DropdownTrigger,
-  DropdownMenu,
-  DropdownItem,
-  Button,
-} from "@nextui-org/react";
+import React, { useState, useEffect } from "react";
+import { Input, Textarea, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button } from "@nextui-org/react";
+import { useRecipeInfo } from "../../context/RecipeInfoContext";
 
 const RecipeInfo = () => {
-  const [selectedKeys, setSelectedKeys] = React.useState(new Set(["select"]));
-  const [selectedCuisine, setSelectedCuisine] = React.useState(new Set(["select"]));
+  const { recipeInfo, setRecipeInfo } = useRecipeInfo();
+  const [selectedDifficulty, setSelectedDifficulty] = useState<string>(recipeInfo.difficulty);
+  const [selectedCuisine, setSelectedCuisine] = useState<string>(recipeInfo.cuisine);
 
-  const selectedValue = React.useMemo(
-    () => Array.from(selectedKeys).join(", ").replaceAll("_", " "),
-    [selectedKeys]
-  );
+  useEffect(() => {
+    setRecipeInfo({ ...recipeInfo, difficulty: selectedDifficulty, cuisine: selectedCuisine });
+  }, [selectedDifficulty, selectedCuisine]);
 
-  const selectedCuisineValue = React.useMemo(
-    () => Array.from(selectedCuisine).join(", ").replaceAll("_", " "),
-    [selectedCuisine]
-  );
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setRecipeInfo({ ...recipeInfo, [name]: value });
+  };
 
   return (
     <>
@@ -36,18 +30,24 @@ const RecipeInfo = () => {
         label="Recipe Name"
         labelPlacement="outside-left"
         placeholder="Enter a tasty name for your recipe"
-        className="max-w-md"
+        className="max-w-md py-2"
         minRows={1}
         maxRows={1}
+        name="name"
+        value={recipeInfo.name}
+        onChange={handleInputChange}
       />
 
       <Textarea
         isRequired
         label="Description"
         labelPlacement="outside-left"
-        placeholder="Here, you can add a short and sweet catchy summary for your recipes to grab your readers attention."
-        className="max-w-lg"
+        placeholder="Here, you can add a short and sweet catchy summary for your recipes to grab your readers' attention."
+        className="max-w-lg py-2"
         minRows={5}
+        name="description"
+        value={recipeInfo.description}
+        onChange={handleInputChange}
       />
 
       <Input
@@ -56,15 +56,14 @@ const RecipeInfo = () => {
         label="Total Time"
         placeholder="0"
         labelPlacement="outside-left"
-        startContent={
-          <div className="pointer-events-none flex items-center">
-            <span className="text-default-400 text-small">Minutes</span>
-          </div>
-        }
+        startContent={<div className="pointer-events-none flex items-center"><span className="text-default-400 text-small">Minutes</span></div>}
         maxLength={1}
         width={1}
-        className="max-w-xs"
+        className="max-w-xs py-2"
         description="Please add the total time in minutes (Required)"
+        name="totalTime"
+        value={recipeInfo.totalTime.toString()}
+        onChange={handleInputChange}
       />
 
       <Input
@@ -72,15 +71,14 @@ const RecipeInfo = () => {
         label="Total Calories"
         placeholder="0"
         labelPlacement="outside-left"
-        startContent={
-          <div className="pointer-events-none flex items-center">
-            <span className="text-default-400 text-small">Calories</span>
-          </div>
-        }
+        startContent={<div className="pointer-events-none flex items-center"><span className="text-default-400 text-small">Calories</span></div>}
         maxLength={1}
         width={1}
-        className="max-w-xs"
+        className="max-w-xs py-2"
         description="Please add the total calories (Optional)"
+        name="totalCalories"
+        value={recipeInfo.totalCalories.toString()}
+        onChange={handleInputChange}
       />
 
       <Input
@@ -91,34 +89,39 @@ const RecipeInfo = () => {
         labelPlacement="outside-left"
         maxLength={1}
         width={1}
-        className="max-w-xs"
+        className="max-w-xs py-2" 
         description="Please tell the total servings (Required)"
+        name="servings"
+        value={recipeInfo.servings.toString()}
+        onChange={handleInputChange}
       />
-
 
       <Textarea
         isRequired
         label="Tags"
         labelPlacement="outside-left"
         placeholder="Add some tags to help your readers find your recipe"
-        className="max-w-lg"
+        className="max-w-lg py-2"
         minRows={3}
+        name="tags"
+        value={recipeInfo.tags}
+        onChange={handleInputChange}
       />
 
       <p>Difficulty Level</p>
       <div className="px-16 py-1">
-        <Dropdown className=" w-10 " dir="top-left">
+        <Dropdown className="w-10" dir="top-left">
           <DropdownTrigger>
             <Button variant="bordered" className="capitalize">
-              {selectedCuisineValue}
+              {selectedDifficulty || "Select Difficulty"}
             </Button>
           </DropdownTrigger>
           <DropdownMenu
             variant="flat"
             disallowEmptySelection
             selectionMode="single"
-            selectedKeys={selectedKeys}
-            onSelectionChange={setSelectedKeys}
+            selectedKeys={new Set([selectedDifficulty])}
+            onSelectionChange={(keys) => setSelectedDifficulty(Array.from(keys)[0].toString())}
           >
             <DropdownItem key="Beginner">Beginner</DropdownItem>
             <DropdownItem key="Intermediate">Intermediate</DropdownItem>
@@ -129,25 +132,25 @@ const RecipeInfo = () => {
 
       <p>Types of Cuisine</p>
       <div className="px-16 py-1">
-        <Dropdown className=" w-10 " dir="top-left">
+        <Dropdown className="w-10" dir="top-left">
           <DropdownTrigger>
             <Button variant="bordered" className="capitalize">
-              {selectedValue}
+              {selectedCuisine || "Select Cuisine"}
             </Button>
           </DropdownTrigger>
           <DropdownMenu
             variant="flat"
             disallowEmptySelection
             selectionMode="single"
-            selectedKeys={selectedCuisine}
-            onSelectionChange={setSelectedCuisine}
+            selectedKeys={new Set([selectedCuisine])}
+            onSelectionChange={(keys) => setSelectedCuisine(Array.from(keys)[0].toString())}
           >
-            <DropdownItem key="Beginner">Indian Cuisine</DropdownItem>
-            <DropdownItem key="Intermediate">Italian Cuisine</DropdownItem>
-            <DropdownItem key="Advanced">Japanese Cuisine</DropdownItem>
-            <DropdownItem key="Advanced">Thai Cuisine</DropdownItem>
-            <DropdownItem key="Advanced">French Cuisine</DropdownItem>
-            <DropdownItem key="Advanced">Mexican Cuisine</DropdownItem>
+            <DropdownItem key="Indian">Indian Cuisine</DropdownItem>
+            <DropdownItem key="Italian">Italian Cuisine</DropdownItem>
+            <DropdownItem key="Japanese">Japanese Cuisine</DropdownItem>
+            <DropdownItem key="Thai">Thai Cuisine</DropdownItem>
+            <DropdownItem key="French">French Cuisine</DropdownItem>
+            <DropdownItem key="Mexican">Mexican Cuisine</DropdownItem>
           </DropdownMenu>
         </Dropdown>
       </div>
