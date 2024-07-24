@@ -7,7 +7,6 @@ import {
   DropdownItem,
   Button,
 } from "@nextui-org/react";
-import { set } from "jodit/types/core/helpers";
 
 const RecipeInfo = () => {
   const [selectedKeys, setSelectedKeys] = React.useState(new Set(["select"]));
@@ -111,7 +110,7 @@ const RecipeInfo = () => {
         <Dropdown className=" w-10 " dir="top-left">
           <DropdownTrigger>
             <Button variant="bordered" className="capitalize">
-              {selectedValue}
+              {selectedCuisineValue}
             </Button>
           </DropdownTrigger>
           <DropdownMenu
