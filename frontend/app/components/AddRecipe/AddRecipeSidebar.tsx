@@ -21,6 +21,7 @@ import Instructions from "./sections/Instructions";
 import Pictures from "./sections/Pictures";
 import NutritionalInfo from "./sections/NutritionalInfo";
 import Submit from "./sections/Submit";
+import { NutritionalInfoProvider } from "../context/NutritionalInfoContext";
 
 export default function AddRecipeSidebar() {
   const [activeSection, setActiveSection] = useState("Recipe Info");
@@ -78,41 +79,42 @@ export default function AddRecipeSidebar() {
   ];
 
   return (
-    <div
-      className={cn(
-        "rounded-md flex flex-col md:flex-row bg-gray-100 dark:bg-neutral-800 w-full flex-1 mx-auto border border-neutral-200 dark:border-neutral-700 overflow-hidden",
-        "h-screen"
-      )}
-    >
-      <Sidebar open={open} setOpen={setOpen}>
-        <SidebarBody className="justify-between gap-10">
-          <div className="flex flex-col flex-1 overflow-y-auto">
-            {open ? <Logo /> : <LogoIcon />}
-            <div className="mt-8 flex flex-col gap-2">
-              {links.map((link, idx) => (
-                <SidebarLink
-                  key={idx}
-                  link={link}
-                  onClick={() => setActiveSection(link.section)}
-                />
-              ))}
+      <div
+        className={cn(
+          "rounded-md flex flex-col md:flex-row bg-gray-100 dark:bg-neutral-800 w-full flex-1 mx-auto border border-neutral-200 dark:border-neutral-700 overflow-hidden",
+          "h-screen"
+        )}
+      >
+        <Sidebar open={open} setOpen={setOpen}>
+          <SidebarBody className="justify-between gap-10">
+            <div className="flex flex-col flex-1 overflow-y-auto">
+              {open ? <Logo /> : <LogoIcon />}
+              <div className="mt-8 flex flex-col gap-2">
+                {links.map((link, idx) => (
+                  <SidebarLink
+                    key={idx}
+                    link={link}
+                    onClick={() => setActiveSection(link.section)}
+                  />
+                ))}
+              </div>
             </div>
-          </div>
-          <div>
-            <SidebarLink
-              link={{
-                label: "User Name",
-                href: "#",
-                icon: (
-                  <IconUserFilled className="text-neutral-700 dark:text-neutral-200 h-7 w-7 flex-shrink-0 rounded" />
-                ),
-              }}
-            />
-          </div>
-        </SidebarBody>
-      </Sidebar>
-      <Dashboard activeSection={activeSection} />
-    </div>
+            <div>
+              <SidebarLink
+                link={{
+                  label: "User Name",
+                  href: "#",
+                  icon: (
+                    <IconUserFilled className="text-neutral-700 dark:text-neutral-200 h-7 w-7 flex-shrink-0 rounded" />
+                  ),
+                }}
+              />
+            </div>
+          </SidebarBody>
+        </Sidebar>
+        <Dashboard activeSection={activeSection} />
+      </div>
+
   );
 }
 

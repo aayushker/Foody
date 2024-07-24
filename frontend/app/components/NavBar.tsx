@@ -16,7 +16,7 @@ import {
 import { useAuth } from "../AuthContext";
 import SignIn from "./ui/auth/SignIn";
 import SignUp from "./ui/auth/SignUp";
-import { ChevronDown } from "./ui/icons/Icons";
+import { ChevronDown } from "@/public/icons/Icons";
 
 const NavBar: React.FC = () => {
   const { isLogged, signOut } = useAuth();
@@ -160,7 +160,9 @@ const NavBar: React.FC = () => {
                 </DropdownItem>
                 <DropdownItem>My Recipe</DropdownItem>
                 <DropdownItem>Favorites</DropdownItem>
-                <DropdownItem color="success"><Link href="/addRecipe">Add Recipe</Link></DropdownItem>
+                <DropdownItem color="success">
+                  <Link href="/addRecipe">Add Recipe</Link>
+                </DropdownItem>
                 <DropdownItem color="danger" onPress={signOut}>
                   Log Out
                 </DropdownItem>

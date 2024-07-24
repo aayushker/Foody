@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   Modal,
   ModalContent,
@@ -10,10 +10,10 @@ import {
   Checkbox,
   Input,
   Link,
-} from '@nextui-org/react';
-import { MailIcon } from '../icons/MailIcon.jsx';
-import { LockIcon } from '../icons/LockIcon.jsx';
-import { useAuth } from '../../../AuthContext';
+} from "@nextui-org/react";
+import { MailIcon } from "@/public/icons/MailIcon.jsx";
+import { LockIcon } from "@/public/icons/LockIcon.jsx";
+import { useAuth } from "@/app/AuthContext";
 
 interface SignUpProps {
   isOpen: boolean;
@@ -22,13 +22,13 @@ interface SignUpProps {
 
 const SignUp: React.FC<SignUpProps> = ({ isOpen, onClose }) => {
   const { signUp } = useAuth();
-  
+
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -110,7 +110,7 @@ const SignUp: React.FC<SignUpProps> = ({ isOpen, onClose }) => {
             <div className="flex py-2 px-1 justify-between">
               <Checkbox
                 classNames={{
-                  label: 'text-small',
+                  label: "text-small",
                 }}
               >
                 Remember me

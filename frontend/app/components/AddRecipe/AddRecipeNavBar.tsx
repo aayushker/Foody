@@ -16,7 +16,7 @@ import {
 import { useAuth } from "../../AuthContext";
 import SignIn from "../ui/auth/SignIn";
 import SignUp from "../ui/auth/SignUp";
-import { ChevronDown } from "../ui/icons/Icons";
+import { ChevronDown } from "@/public/icons/Icons";
 
 const AddRecipeNavBar: React.FC = () => {
   const { isLogged, signOut } = useAuth();
