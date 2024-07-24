@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import { Input, Image, Spacer } from '@nextui-org/react';
+import { Input, Image, Spacer, Button } from '@nextui-org/react';
+import { usePictures } from '@/app/components/context/PicturesContext';
 
 const Pictures = () => {
-  const [images, setImages] = useState<string[]>([]);
-  const [mainImage, setMainImage] = useState<string | null>(null);
+  const { images, mainImage, setImages, setMainImage } = usePictures();
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
     const newImages = files.map(file => URL.createObjectURL(file));
-    setImages([...images, ...newImages]);
+    setImages(prevImages => [...prevImages, ...newImages]);
   };
 
   const handleMainImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -16,6 +16,13 @@ const Pictures = () => {
     if (file) {
       setMainImage(URL.createObjectURL(file));
     }
+  };
+
+  const handleRemoveImage = (index: number) => {
+    setImages(prevImages => {
+      const newImages = prevImages.filter((_, i) => i !== index);
+      return newImages;
+    });
   };
 
   return (
@@ -34,7 +41,7 @@ const Pictures = () => {
           label="Add Images"
           onChange={handleImageChange}
           accept="image/*"
-          style={{ width: '100%' }} 
+          style={{ width: '100%' }}
           className='max-w-sm'
           description="Add multiple images to showcase your recipe."
         />
@@ -42,7 +49,25 @@ const Pictures = () => {
         {images.length > 0 && (
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
             {images.map((src, index) => (
-              <Image key={index} src={src} alt={`Image ${index}`} style={{ width: '150px', height: 'auto' }} />
+              <div key={index} style={{ position: 'relative', width: '150px', height: 'auto' }}>
+                <Image src={src} alt={`Image ${index}`} style={{ width: '100%', height: 'auto' }} />
+                <Button
+                  size="sm"
+                  color="danger"
+                  onClick={() => handleRemoveImage(index)}
+                  style={{
+                    position: 'absolute',
+                    top: '5px',
+                    right: '5px',
+                    padding: '0',
+                    minWidth: '20px',
+                    height: '20px',
+                    zIndex: 10,
+                  }}
+                >
+                  &times;
+                </Button>
+              </div>
             ))}
           </div>
         )}
@@ -54,7 +79,7 @@ const Pictures = () => {
           label="Main Display Image"
           onChange={handleMainImageChange}
           accept="image/*"
-          style={{ width: '100%' }} 
+          style={{ width: '100%' }}
           className='max-w-sm'
         />
         <Spacer y={1} />
