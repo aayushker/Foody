@@ -1,24 +1,50 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { Input, Switch, Spacer } from "@nextui-org/react";
+import { useNutritionalInfo } from "../../context/NutritionalInfoContext";
+
+// known issue: the button state is not preserving
 
 const NutritionalInfo = () => {
-  const [showNutritionalInfo, setShowNutritionalInfo] = useState(false);
-  const [calories, setCalories] = useState(0);
-  const [protein, setProtein] = useState(0);
-  const [fat, setFat] = useState(0);
-  const [carbohydrates, setCarbohydrates] = useState(0);
+  const {
+    showNutritionalInfo,
+    setShowNutritionalInfo,
+    calories,
+    setCalories,
+    protein,
+    setProtein,
+    fat,
+    setFat,
+    carbohydrates,
+    setCarbohydrates,
+  } = useNutritionalInfo();
+
+  // Effect to load the initial state from localStorage
+  useEffect(() => {
+    const storedShowNutritionalInfo = localStorage.getItem(
+      "showNutritionalInfo"
+    );
+    if (storedShowNutritionalInfo) {
+      setShowNutritionalInfo(JSON.parse(storedShowNutritionalInfo));
+    }
+  }, [setShowNutritionalInfo]);
+
+  // Effect to save the state to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem(
+      "showNutritionalInfo",
+      JSON.stringify(showNutritionalInfo)
+    );
+  }, [showNutritionalInfo]);
 
   const handleToggleChange = () => {
     setShowNutritionalInfo(!showNutritionalInfo);
   };
 
   const handleInputChange =
-    (setter: React.Dispatch<React.SetStateAction<number>>) =>
+    (setter: (value: number) => void) =>
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setter(Number(e.target.value));
     };
-
-  const totalNutrients = calories + protein + fat + carbohydrates;
 
   return (
     <>
@@ -30,8 +56,11 @@ const NutritionalInfo = () => {
         decisions about their meals! 🥗
       </p>
       <Spacer y={1} />
-      <p className="text-sm">PS: If you know the Nutritional value of the recipe then toggle the switch to add it or you can leave it</p>
-      <Switch checked={showNutritionalInfo} onChange={handleToggleChange} >
+      <p className="text-sm">
+        PS: If you know the Nutritional value of the recipe then toggle the
+        switch to add it or you can leave it
+      </p>
+      <Switch checked={showNutritionalInfo} onChange={handleToggleChange}>
         Show Nutritional Information
       </Switch>
       <Spacer y={1} />
