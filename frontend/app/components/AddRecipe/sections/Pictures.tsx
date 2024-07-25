@@ -6,23 +6,19 @@ const Pictures = () => {
   const { images, mainImage, setImages, setMainImage } = usePictures();
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(e.target.files || []);
-    const newImages = files.map(file => URL.createObjectURL(file));
-    setImages(prevImages => [...prevImages, ...newImages]);
+    if (e.target.files) {
+      setImages([...images, ...Array.from(e.target.files)]);
+    }
   };
 
   const handleMainImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files ? e.target.files[0] : null;
-    if (file) {
-      setMainImage(URL.createObjectURL(file));
+    if (e.target.files && e.target.files[0]) {
+      setMainImage(e.target.files[0]);
     }
   };
 
   const handleRemoveImage = (index: number) => {
-    setImages(prevImages => {
-      const newImages = prevImages.filter((_, i) => i !== index);
-      return newImages;
-    });
+    setImages(images.filter((_, i) => i !== index));
   };
 
   return (
@@ -50,7 +46,7 @@ const Pictures = () => {
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
             {images.map((src, index) => (
               <div key={index} style={{ position: 'relative', width: '150px', height: 'auto' }}>
-                <Image src={src} alt={`Image ${index}`} style={{ width: '100%', height: 'auto' }} />
+                <Image src={URL.createObjectURL(src)} alt={`Image ${index}`} style={{ width: '100%', height: 'auto' }} />
                 <Button
                   size="sm"
                   color="danger"
@@ -83,8 +79,8 @@ const Pictures = () => {
           className='max-w-sm'
         />
         <Spacer y={1} />
-        {mainImage && (
-          <Image src={mainImage} alt="Main Display Image" style={{ width: '100%', maxWidth: '600px', height: 'auto' }} />
+        {mainImage && mainImage instanceof File && (
+          <Image src={URL.createObjectURL(mainImage)} alt="Main Display Image" style={{ width: '100%', maxWidth: '600px', height: 'auto' }} />
         )}
       </div>
     </>
