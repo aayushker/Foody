@@ -1,53 +1,49 @@
 from rest_framework import serializers
-from .models import Recipe, Ingredient, Instruction, NutritionalInfo, Comment, Image
-
-class ImageSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Image
-        fields = '__all__'
+from .models import Recipe, Ingredient, Instruction, NutritionalInfo
 
 class IngredientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ingredient
-        fields = '__all__'
+        fields = ['quantity', 'unit', 'ingredient', 'notes']
 
 class InstructionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Instruction
-        fields = '__all__'
+        fields = ['step']
 
 class NutritionalInfoSerializer(serializers.ModelSerializer):
     class Meta:
         model = NutritionalInfo
-        fields = '__all__'
-
-class CommentSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Comment
-        fields = '__all__'
+        fields = ['calories', 'protein', 'fat', 'carbohydrates']
 
 class RecipeSerializer(serializers.ModelSerializer):
     ingredients = IngredientSerializer(many=True)
-    instructions = InstructionSerializer(many=True)
+    instructions = serializers.CharField()
     nutritional_info = NutritionalInfoSerializer()
-    comments = CommentSerializer(many=True)
-    images = ImageSerializer(many=True)
 
     class Meta:
         model = Recipe
-        fields = '__all__'
+        fields = ['name', 'description', 'total_time', 'total_calories', 'servings', 'tags', 'difficulty', 'cuisine', 'ingredients', 'instructions', 'nutritional_info']
 
     def create(self, validated_data):
         ingredients_data = validated_data.pop('ingredients')
         instructions_data = validated_data.pop('instructions')
         nutritional_info_data = validated_data.pop('nutritional_info')
-        images_data = validated_data.pop('images')
-        recipe = Recipe.objects.create(**validated_data)
+
+        # Use a dummy user ID for now
+        user = validated_data.pop('user', 1)  # Replace '1' with your dummy user ID
+
+        recipe = Recipe.objects.create(user_id=user, **validated_data)  # Use user_id here
+
+        # Add ingredients
         for ingredient_data in ingredients_data:
             Ingredient.objects.create(recipe=recipe, **ingredient_data)
-        for instruction_data in instructions_data:
-            Instruction.objects.create(recipe=recipe, **instruction_data)
+
+        # Convert instructions string to a list and add instructions
+        for step in instructions_data.split('\n'):
+            Instruction.objects.create(recipe=recipe, step=step.strip())
+
+        # Add nutritional info
         NutritionalInfo.objects.create(recipe=recipe, **nutritional_info_data)
-        for image_data in images_data:
-            Image.objects.create(recipe=recipe, **image_data)
+
         return recipe
