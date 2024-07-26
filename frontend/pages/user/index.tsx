@@ -1,12 +1,12 @@
 import React from "react";
 import UserLayout from "@/app/userLayout";
-import AdminSidebar from "@/app/components/UserPanel/UserSidebar";
+import UserPanel from "@/app/components/UserPanel";
 import "@/app/globals.css";
 
 const Index = () => {
   return (
     <UserLayout>
-      <AdminSidebar />
+      <UserPanel />
     </UserLayout>
   );
 };

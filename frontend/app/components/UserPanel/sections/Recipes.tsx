@@ -1,11 +1,11 @@
 import React from 'react'
 
-const LikedRecipes = () => {
+const Recipes = () => {
   return (
     <div>
-      
+      Recipes
     </div>
   )
 }
 
-export default LikedRecipes
+export default Recipes

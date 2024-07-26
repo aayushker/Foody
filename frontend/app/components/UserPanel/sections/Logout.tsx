@@ -1,11 +1,11 @@
 import React from 'react'
 
-const Tabs = () => {
+const Logout = () => {
   return (
     <div>
-      
+      Logout
     </div>
   )
 }
 
-export default Tabs
+export default Logout

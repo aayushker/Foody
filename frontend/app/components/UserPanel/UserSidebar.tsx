@@ -13,10 +13,19 @@ import {
 } from "@tabler/icons-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import Image from "next/image";
 import { cn } from "@/lib/utils";
 
+import UserDashboard from "./sections/UserDashboard";
+import Profile from "./sections/Profile";
+import Recipes from "./sections/Recipes";
+import Settings from "./sections/Settings";
+import HelpSupport from "./sections/HelpSupport";
+import Logout from "./sections/Logout";
+
 export default function UserSidebar() {
+  const [activeSection, setActiveSection] = useState("Dashboard");
+  const [open, setOpen] = useState(false);
+
   const links = [
     {
       label: "Dashboard",
@@ -24,6 +33,7 @@ export default function UserSidebar() {
       icon: (
         <IconBrandTabler className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
+      section: "Dashboard",
     },
     {
       label: "Profile",
@@ -31,6 +41,7 @@ export default function UserSidebar() {
       icon: (
         <IconUserBolt className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
+      section: "Profile",
     },
     {
       label: "My Recipes",
@@ -38,6 +49,7 @@ export default function UserSidebar() {
       icon: (
         <IconBreadFilled className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
+      section: "Recipes",
     },
     {
       label: "Settings",
@@ -45,6 +57,7 @@ export default function UserSidebar() {
       icon: (
         <IconSettings className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
+      section: "Settings",
     },
     {
       label: "Help and Support",
@@ -52,6 +65,7 @@ export default function UserSidebar() {
       icon: (
         <IconHelp className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
+      section: "HelpSupport",
     },
     {
       label: "Logout",
@@ -59,9 +73,10 @@ export default function UserSidebar() {
       icon: (
         <IconArrowLeft className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
+      section: "Logout",
     },
   ];
-  const [open, setOpen] = useState(false);
+
   return (
     <div
       className={cn(
@@ -75,7 +90,11 @@ export default function UserSidebar() {
             {open ? <Logo /> : <LogoIcon />}
             <div className="mt-8 flex flex-col gap-2">
               {links.map((link, idx) => (
-                <SidebarLink key={idx} link={link} />
+                <SidebarLink
+                  key={idx}
+                  link={link}
+                  onClick={() => setActiveSection(link.section)}
+                />
               ))}
             </div>
           </div>
@@ -85,13 +104,6 @@ export default function UserSidebar() {
                 label: "User Name",
                 href: "#",
                 icon: (
-                  // <Image
-                  //   src="/images/user.png"
-                  //   className="h-7 w-7 flex-shrink-0 rounded-full"
-                  //   width={50}
-                  //   height={50}
-                  //   alt="Avatar"
-                  // />
                   <IconUserFilled className="text-neutral-700 dark:text-neutral-200 h-7 w-7 flex-shrink-0 rounded" />
                 ),
               }}
@@ -99,10 +111,11 @@ export default function UserSidebar() {
           </div>
         </SidebarBody>
       </Sidebar>
-      <Dashboard />
+      <Dashboard activeSection={activeSection} />
     </div>
   );
 }
+
 export const Logo = () => {
   return (
     <Link
@@ -120,6 +133,7 @@ export const Logo = () => {
     </Link>
   );
 };
+
 export const LogoIcon = () => {
   return (
     <Link
@@ -131,27 +145,16 @@ export const LogoIcon = () => {
   );
 };
 
-// Dummy dashboard component with content
-const Dashboard = () => {
+const Dashboard = ({ activeSection }: { activeSection: string }) => {
   return (
     <div className="flex flex-1">
       <div className="p-2 md:p-10 rounded-tl-2xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 flex flex-col gap-2 flex-1 w-full h-full">
-        <div className="flex gap-2">
-          {[...new Array(4)].map((i) => (
-            <div
-              key={"first-array" + i}
-              className="h-20 w-full rounded-lg  bg-gray-100 dark:bg-neutral-800 animate-pulse"
-            ></div>
-          ))}
-        </div>
-        <div className="flex gap-2 flex-1">
-          {[...new Array(2)].map((i) => (
-            <div
-              key={"second-array" + i}
-              className="h-full w-full rounded-lg  bg-gray-100 dark:bg-neutral-800 animate-pulse"
-            ></div>
-          ))}
-        </div>
+        {activeSection === "Dashboard" && <UserDashboard />}
+        {activeSection === "Profile" && <Profile />}
+        {activeSection === "Recipes" && <Recipes />}
+        {activeSection === "Settings" && <Settings />}
+        {activeSection === "HelpSupport" && <HelpSupport />}
+        {activeSection === "Logout" && <Logout />}
       </div>
     </div>
   );
