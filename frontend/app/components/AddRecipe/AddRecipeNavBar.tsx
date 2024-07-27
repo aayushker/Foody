@@ -14,8 +14,8 @@ import {
   Button,
 } from "@nextui-org/react";
 import { useAuth } from "../../AuthContext";
-import SignIn from "../ui/auth/SignIn";
-import SignUp from "../ui/auth/SignUp";
+import SignIn from "../ui/auth/Login";
+import SignUp from "../ui/auth/Register";
 import { ChevronDown } from "@/public/icons/Icons";
 
 const AddRecipeNavBar: React.FC = () => {

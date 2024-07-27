@@ -14,12 +14,12 @@ import {
   Button,
 } from "@nextui-org/react";
 import { useAuth } from "../AuthContext";
-import SignIn from "./ui/auth/SignIn";
-import SignUp from "./ui/auth/SignUp";
+import Login from "./ui/auth/Login";
+import Register from "./ui/auth/Register";
 import { ChevronDown } from "@/public/icons/Icons";
 
 const NavBar: React.FC = () => {
-  const { isLogged, signOut } = useAuth();
+  const { isAuthenticated, user, logout } = useAuth();
   const [isSignInOpen, setIsSignInOpen] = useState(false);
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);
 
@@ -144,16 +144,16 @@ const NavBar: React.FC = () => {
                 as="button"
                 className="transition-transform"
                 color="secondary"
-                name="Jason Hughes"
+                name={user ? user.username : "Guest"}
                 size="sm"
                 src="/images/user.png"
               />
             </DropdownTrigger>
-            {isLogged ? (
+            {isAuthenticated ? (
               <DropdownMenu aria-label="Profile Actions" variant="flat">
                 <DropdownItem className="h-14 gap-2">
                   <p className="font-semibold">Hello👋,</p>
-                  <p className="font-semibold">User Name</p>
+                  <p className="font-semibold">{user.username}</p>
                 </DropdownItem>
                 <DropdownItem>
                   <Link href="/user">Dashboard</Link>
@@ -163,21 +163,21 @@ const NavBar: React.FC = () => {
                 <DropdownItem color="success">
                   <Link href="/addRecipe">Add Recipe</Link>
                 </DropdownItem>
-                <DropdownItem color="danger" onPress={signOut}>
+                <DropdownItem color="danger" onPress={logout}>
                   Log Out
                 </DropdownItem>
               </DropdownMenu>
             ) : (
               <DropdownMenu aria-label="Profile Actions" variant="flat">
-                <DropdownItem onPress={handleSignInOpen}>Log In</DropdownItem>
-                <DropdownItem onPress={handleSignUpOpen}>Sign Up</DropdownItem>
+                <DropdownItem onPress={handleSignInOpen}>Login</DropdownItem>
+                <DropdownItem onPress={handleSignUpOpen}>Signup</DropdownItem>
               </DropdownMenu>
             )}
           </Dropdown>
         </NavbarContent>
       </Navbar>
-      <SignIn isOpen={isSignInOpen} onClose={handleSignInClose} />
-      <SignUp isOpen={isSignUpOpen} onClose={handleSignUpClose} />
+      <Login isOpen={isSignInOpen} onClose={handleSignInClose} />
+      <Register isOpen={isSignUpOpen} onClose={handleSignUpClose} />
     </>
   );
 };
