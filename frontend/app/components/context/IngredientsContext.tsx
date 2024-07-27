@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
 
 interface Ingredient {
   quantity: string;
@@ -12,18 +18,22 @@ interface IngredientsContextType {
   setIngredients: (value: Ingredient[]) => void;
 }
 
-const IngredientsContext = createContext<IngredientsContextType | undefined>(undefined);
+const IngredientsContext = createContext<IngredientsContextType | undefined>(
+  undefined
+);
 
 export const IngredientsProvider = ({ children }: { children: ReactNode }) => {
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
 
   useEffect(() => {
-    const savedIngredients = localStorage.getItem("ingredients");
+    const savedIngredients = sessionStorage.getItem("ingredients");
+    // const savedIngredients = localStorage.getItem("ingredients");
     if (savedIngredients) setIngredients(JSON.parse(savedIngredients));
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("ingredients", JSON.stringify(ingredients));
+    sessionStorage.setItem("ingredients", JSON.stringify(ingredients));
+    // localStorage.setItem("ingredients", JSON.stringify(ingredients));
   }, [ingredients]);
 
   return (
@@ -31,14 +41,16 @@ export const IngredientsProvider = ({ children }: { children: ReactNode }) => {
       {children}
     </IngredientsContext.Provider>
   );
-}
+};
 
 export const useIngredients = () => {
   const context = useContext(IngredientsContext);
   if (!context) {
-    throw new Error("useIngredients must be used within an IngredientsProvider");
+    throw new Error(
+      "useIngredients must be used within an IngredientsProvider"
+    );
   }
   return context;
-}
+};
 
 export default IngredientsContext;

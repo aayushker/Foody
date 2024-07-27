@@ -37,7 +37,8 @@ export const NutritionalInfoProvider = ({ children }: { children: ReactNode }) =
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("showNutritionalInfo", JSON.stringify(showNutritionalInfo));
+    sessionStorage.setItem("showNutritionalInfo", JSON.stringify(showNutritionalInfo));
+    // localStorage.setItem("showNutritionalInfo", JSON.stringify(showNutritionalInfo));
   }, [showNutritionalInfo]);
 
   useEffect(() => {

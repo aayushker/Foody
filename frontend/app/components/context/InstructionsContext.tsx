@@ -11,13 +11,14 @@ export const InstructionsProvider = ({ children }: { children: ReactNode }) => {
     const [instructions, setInstructions] = useState<string>("");
 
     useEffect(() => {
-        const savedInstructions = localStorage.getItem("instructions");
-
+        const savedInstructions = sessionStorage.getItem("instructions");
+        // const savedInstructions = localStorage.getItem("instructions");
         if (savedInstructions) setInstructions(JSON.parse(savedInstructions));
     }, []);
 
     useEffect(() => {
-        localStorage.setItem("instructions", JSON.stringify(instructions));
+        sessionStorage.setItem("instructions", JSON.stringify(instructions));
+        // localStorage.setItem("instructions", JSON.stringify(instructions));
     }, [instructions]);
 
     return (

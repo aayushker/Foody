@@ -31,12 +31,14 @@ export const RecipeInfoProvider = ({ children }: { children: ReactNode }) => {
   });
 
   useEffect(() => {
-    const savedRecipeInfo = localStorage.getItem("recipeInfo");
+    const savedRecipeInfo = sessionStorage.getItem("recipeInfo");
+    // const savedRecipeInfo = localStorage.getItem("recipeInfo");
     if (savedRecipeInfo) setRecipeInfo(JSON.parse(savedRecipeInfo));
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("recipeInfo", JSON.stringify(recipeInfo));
+    sessionStorage.setItem("recipeInfo", JSON.stringify(recipeInfo));
+    // localStorage.setItem("recipeInfo", JSON.stringify(recipeInfo));
   }, [recipeInfo]);
 
   return (
