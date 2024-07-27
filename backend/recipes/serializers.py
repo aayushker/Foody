@@ -23,25 +23,35 @@ class RecipeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Recipe
-        fields = ['name', 'description', 'total_time', 'total_calories', 'servings', 'tags', 'difficulty', 'cuisine', 'ingredients', 'instructions', 'nutritional_info']
+        fields = [
+            'name', 
+            'description', 
+            'total_time', 
+            'total_calories', 
+            'servings', 
+            'tags', 
+            'difficulty', 
+            'cuisine', 
+            'ingredients', 
+            'instructions', 
+            'nutritional_info',
+            # 'main_image',  #baad mai add karna hai
+        ]
 
     def create(self, validated_data):
         ingredients_data = validated_data.pop('ingredients')
         instructions_data = validated_data.pop('instructions')
         nutritional_info_data = validated_data.pop('nutritional_info')
-
-        # Use a dummy user ID for now
-        user = validated_data.pop('user', 1)  # Replace '1' with your dummy user ID
-
-        recipe = Recipe.objects.create(user_id=user, **validated_data)  # Use user_id here
+ 
+        user = validated_data.pop('user', None)
+        recipe = Recipe.objects.create(user=user, **validated_data) 
 
         # Add ingredients
         for ingredient_data in ingredients_data:
             Ingredient.objects.create(recipe=recipe, **ingredient_data)
 
-        # Convert instructions string to a list and add instructions
-        for step in instructions_data.split('\n'):
-            Instruction.objects.create(recipe=recipe, step=step.strip())
+        # Add instructions
+        Instruction.objects.create(recipe=recipe, step=instructions_data.strip())
 
         # Add nutritional info
         NutritionalInfo.objects.create(recipe=recipe, **nutritional_info_data)
