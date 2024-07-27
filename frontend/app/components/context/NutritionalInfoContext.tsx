@@ -54,7 +54,8 @@ export const NutritionalInfoProvider = ({ children }: { children: ReactNode }) =
   }, [fat]);
 
   useEffect(() => {
-    localStorage.setItem("carbohydrates", JSON.stringify(carbohydrates));
+    sessionStorage.setItem("carbohydrates", JSON.stringify(carbohydrates));
+    // localStorage.setItem("carbohydrates", JSON.stringify(carbohydrates));
   }, [carbohydrates]);
 
   return (

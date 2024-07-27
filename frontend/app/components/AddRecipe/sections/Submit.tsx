@@ -4,6 +4,7 @@ import { useRecipeInfo } from "../../context/RecipeInfoContext";
 import { useIngredients } from "../../context/IngredientsContext";
 import { useInstructions } from "../../context/InstructionsContext";
 import { useNutritionalInfo } from "../../context/NutritionalInfoContext";
+import { useRouter } from 'next/router';
 
 const Submit = () => {
   const { recipeInfo } = useRecipeInfo();
@@ -12,6 +13,16 @@ const Submit = () => {
   const { showNutritionalInfo, calories, protein, fat, carbohydrates } =
     useNutritionalInfo();
 
+  const Router = useRouter();
+
+  const token = localStorage.getItem("token");
+  // console.log("Token:", token); 
+
+  if (!token) {
+    alert("Please login to submit a recipe");
+    Router.push("/");
+    return null;
+  }
   const validateData = () => {
     if (
       !recipeInfo.name ||
@@ -63,7 +74,6 @@ const Submit = () => {
       })),
       instructions: instructions,
       nutritional_info: {
-        showNutritionalInfo,
         calories,
         protein,
         fat,
@@ -80,6 +90,7 @@ const Submit = () => {
         {
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`, 
           },
         }
       );
@@ -90,17 +101,16 @@ const Submit = () => {
   };
 
   return (
-        <>
-          <p className="text-black text-2xl font-semibold drop-shadow-md bg-clip-text animate-gradient">
-            Submit 🚀
-          </p>
-          <p className="text-black text-md drop-shadow-md">
-            Submit your recipe to share it with the world! 🌍
-          </p>
-          <button onClick={handleSubmit}>Submit Recipe</button>
-        </>
-      );
-    };
+    <>
+      <p className="text-black text-2xl font-semibold drop-shadow-md bg-clip-text animate-gradient">
+        Submit 🚀
+      </p>
+      <p className="text-black text-md drop-shadow-md">
+        Submit your recipe to share it with the world! 🌍
+      </p>
+      <button onClick={handleSubmit}>Submit Recipe</button>
+    </>
+  );
+};
 
 export default Submit;
-
