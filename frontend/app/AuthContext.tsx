@@ -52,7 +52,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const login = async (username: string, password: string) => {
     try {
-      console.log("baseurl:", baseurl);
       // const response = await axios.post('http://127.0.0.1:8000/api/token/', { username, password });
       const response = await axios.post(`${baseurl}/api/token/`, { username, password });
       const { access, refresh } = response.data;

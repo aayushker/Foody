@@ -42,9 +42,11 @@ ALLOWED_HOSTS = ['*']
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000', 
+    'letsfoody.vercel.app',
+    
 ]
 
-CORS_ALLOW_ALL_ORIGINS = True
+# CORS_ALLOW_ALL_ORIGINS = True
 
 # Application definition
 
@@ -101,7 +103,7 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=90),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=90),
     "ROTATE_REFRESH_TOKENS": True,
     "BLACKLIST_AFTER_ROTATION": True,
@@ -144,14 +146,29 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': os.getenv('DATABASE_NAME'), 
+#         'USER': os.getenv('DATABASE_USER'),
+#         'PASSWORD': os.getenv('DATABASE_PASSWORD'),
+#         'HOST': '127.0.0.1', 
+#         'PORT': '5432',
+#     }
+# }
+DATABASE_URL=os.getenv('DATABASE_URL')
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.getenv('DATABASE_NAME'), 
         'USER': os.getenv('DATABASE_USER'),
         'PASSWORD': os.getenv('DATABASE_PASSWORD'),
-        'HOST': '127.0.0.1', 
-        'PORT': '5432',
+        'HOST': 'pg-338553bb-letsfoody.g.aivencloud.com', 
+        'PORT': '22120',
+        'OPTIONS': {
+            'sslmode': 'require',
+        },
     }
 }
 
