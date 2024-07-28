@@ -2,6 +2,7 @@ import React, { createContext, useState, useContext, ReactNode, useEffect } from
 import { useRouter } from 'next/router';
 import {jwtDecode} from 'jwt-decode';
 import axios from 'axios';
+import  baseurl  from '@/baseurl';
 
 interface AuthContextType {
   user: any;
@@ -51,7 +52,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const login = async (username: string, password: string) => {
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/token/', { username, password });
+      console.log("baseurl:", baseurl);
+      // const response = await axios.post('http://127.0.0.1:8000/api/token/', { username, password });
+      const response = await axios.post(`${baseurl}/api/token/`, { username, password });
       const { access, refresh } = response.data;
       localStorage.setItem('token', access);
       setUser(jwtDecode(access));
@@ -69,7 +72,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const register = async (username: string, password: string, email: string, firstName: string, lastName: string) => {
     try {
-      await axios.post('http://127.0.0.1:8000/api/register/', { username, password, email, first_name: firstName, last_name: lastName });
+      // await axios.post('http://127.0.0.1:8000/api/register/', { username, password, email, first_name: firstName, last_name: lastName });
+      await axios.post(`${baseurl}/api/register/`, { username, password, email, first_name: firstName, last_name: lastName });
       router.push('/');
     } catch (error) {
       console.error('Register failed', error);

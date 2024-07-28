@@ -5,6 +5,7 @@ import { useIngredients } from "../../context/IngredientsContext";
 import { useInstructions } from "../../context/InstructionsContext";
 import { useNutritionalInfo } from "../../context/NutritionalInfoContext";
 import { useRouter } from 'next/router';
+import  baseurl  from "@/baseurl";
 
 const Submit = () => {
   const { recipeInfo } = useRecipeInfo();
@@ -85,7 +86,8 @@ const Submit = () => {
 
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/addRecipe/",
+        // "http://127.0.0.1:8000/api/addRecipe/",
+        `${baseurl}/api/addRecipe/`,
         data,
         {
           headers: {
