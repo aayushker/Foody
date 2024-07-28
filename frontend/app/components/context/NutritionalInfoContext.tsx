@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
 
 interface NutritionalInfoContextType {
   showNutritionalInfo: boolean;
@@ -13,23 +19,39 @@ interface NutritionalInfoContextType {
   setCarbohydrates: (value: number) => void;
 }
 
-const NutritionalInfoContext = createContext<NutritionalInfoContextType | undefined>(undefined);
+const NutritionalInfoContext = createContext<
+  NutritionalInfoContextType | undefined
+>(undefined);
 
-export const NutritionalInfoProvider = ({ children }: { children: ReactNode }) => {
-  const [showNutritionalInfo, setShowNutritionalInfo] = useState<boolean>(false);
+export const NutritionalInfoProvider = ({
+  children,
+}: {
+  children: ReactNode;
+}) => {
+  const [showNutritionalInfo, setShowNutritionalInfo] =
+    useState<boolean>(false);
   const [calories, setCalories] = useState<number>(0);
   const [protein, setProtein] = useState<number>(0);
   const [fat, setFat] = useState<number>(0);
   const [carbohydrates, setCarbohydrates] = useState<number>(0);
 
   useEffect(() => {
-    const savedShowNutritionalInfo = localStorage.getItem("showNutritionalInfo");
-    const savedCalories = localStorage.getItem("calories");
-    const savedProtein = localStorage.getItem("protein");
-    const savedFat = localStorage.getItem("fat");
-    const savedCarbohydrates = localStorage.getItem("carbohydrates");
+    const savedShowNutritionalInfo = sessionStorage.getItem(
+      "showNutritionalInfo"
+    );
+    const savedCalories = sessionStorage.getItem("calories");
+    const savedProtein = sessionStorage.getItem("protein");
+    const savedFat = sessionStorage.getItem("fat");
+    const savedCarbohydrates = sessionStorage.getItem("carbohydrates");
 
-    if (savedShowNutritionalInfo) setShowNutritionalInfo(JSON.parse(savedShowNutritionalInfo));
+    // const savedShowNutritionalInfo = localStorage.getItem("showNutritionalInfo");
+    // const savedCalories = localStorage.getItem("calories");
+    // const savedProtein = localStorage.getItem("protein");
+    // const savedFat = localStorage.getItem("fat");
+    // const savedCarbohydrates = localStorage.getItem("carbohydrates");
+
+    if (savedShowNutritionalInfo)
+      setShowNutritionalInfo(JSON.parse(savedShowNutritionalInfo));
     if (savedCalories) setCalories(JSON.parse(savedCalories));
     if (savedProtein) setProtein(JSON.parse(savedProtein));
     if (savedFat) setFat(JSON.parse(savedFat));
@@ -37,20 +59,26 @@ export const NutritionalInfoProvider = ({ children }: { children: ReactNode }) =
   }, []);
 
   useEffect(() => {
-    sessionStorage.setItem("showNutritionalInfo", JSON.stringify(showNutritionalInfo));
+    sessionStorage.setItem(
+      "showNutritionalInfo",
+      JSON.stringify(showNutritionalInfo)
+    );
     // localStorage.setItem("showNutritionalInfo", JSON.stringify(showNutritionalInfo));
   }, [showNutritionalInfo]);
 
   useEffect(() => {
-    localStorage.setItem("calories", JSON.stringify(calories));
+    sessionStorage.setItem("calories", JSON.stringify(calories));
+    // localStorage.setItem("calories", JSON.stringify(calories));
   }, [calories]);
 
   useEffect(() => {
-    localStorage.setItem("protein", JSON.stringify(protein));
+    sessionStorage.setItem("protein", JSON.stringify(protein));
+    // localStorage.setItem("protein", JSON.stringify(protein));
   }, [protein]);
 
   useEffect(() => {
-    localStorage.setItem("fat", JSON.stringify(fat));
+    sessionStorage.setItem("fat", JSON.stringify(fat));
+    // localStorage.setItem("fat", JSON.stringify(fat));
   }, [fat]);
 
   useEffect(() => {
@@ -81,7 +109,9 @@ export const NutritionalInfoProvider = ({ children }: { children: ReactNode }) =
 export const useNutritionalInfo = () => {
   const context = useContext(NutritionalInfoContext);
   if (context === undefined) {
-    throw new Error("useNutritionalInfo must be used within a NutritionalInfoProvider");
+    throw new Error(
+      "useNutritionalInfo must be used within a NutritionalInfoProvider"
+    );
   }
   return context;
 };

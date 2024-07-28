@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
 
 interface RecipeInfo {
   name: string;
@@ -16,7 +22,9 @@ interface RecipeInfoContextType {
   setRecipeInfo: (value: RecipeInfo) => void;
 }
 
-const RecipeInfoContext = createContext<RecipeInfoContextType | undefined>(undefined);
+const RecipeInfoContext = createContext<RecipeInfoContextType | undefined>(
+  undefined
+);
 
 export const RecipeInfoProvider = ({ children }: { children: ReactNode }) => {
   const [recipeInfo, setRecipeInfo] = useState<RecipeInfo>({
@@ -46,7 +54,7 @@ export const RecipeInfoProvider = ({ children }: { children: ReactNode }) => {
       {children}
     </RecipeInfoContext.Provider>
   );
-}
+};
 
 export const useRecipeInfo = () => {
   const context = useContext(RecipeInfoContext);
@@ -54,6 +62,6 @@ export const useRecipeInfo = () => {
     throw new Error("useRecipeInfo must be used within a RecipeInfoProvider");
   }
   return context;
-}
+};
 
 export default RecipeInfoContext;

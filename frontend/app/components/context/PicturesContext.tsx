@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode } from "react";
 
 interface PicturesContextType {
   images: File[];
@@ -7,18 +7,22 @@ interface PicturesContextType {
   setMainImage: React.Dispatch<React.SetStateAction<File>>;
 }
 
-const PicturesContext = createContext<PicturesContextType | undefined>(undefined);
+const PicturesContext = createContext<PicturesContextType | undefined>(
+  undefined
+);
 
 export const PicturesProvider = ({ children }: { children: ReactNode }) => {
   const [images, setImages] = useState<File[]>([]);
   const [mainImage, setMainImage] = useState<File>({} as File);
 
   return (
-    <PicturesContext.Provider value={{ images, mainImage, setImages, setMainImage }}>
+    <PicturesContext.Provider
+      value={{ images, mainImage, setImages, setMainImage }}
+    >
       {children}
     </PicturesContext.Provider>
   );
-}
+};
 
 export const usePictures = () => {
   const context = useContext(PicturesContext);
@@ -26,6 +30,6 @@ export const usePictures = () => {
     throw new Error("usePictures must be used within a PicturesProvider");
   }
   return context;
-}
+};
 
 export default PicturesContext;
