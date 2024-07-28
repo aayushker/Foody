@@ -19,7 +19,6 @@ import SignUp from "../ui/auth/Register";
 import { ChevronDown } from "@/public/icons/Icons";
 
 const AddRecipeNavBar: React.FC = () => {
-  const { isLogged, signOut } = useAuth();
   const [isSignInOpen, setIsSignInOpen] = useState(false);
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);
 
@@ -96,9 +95,9 @@ const AddRecipeNavBar: React.FC = () => {
               <DropdownItem>My Recipes</DropdownItem>
               <DropdownItem>Favorites</DropdownItem>
               <DropdownItem>Settings</DropdownItem>
-              <DropdownItem color="danger" onPress={signOut}>
+              {/* <DropdownItem color="danger" onPress={signOut}>
                 Log Out
-              </DropdownItem>
+              </DropdownItem> */}
             </DropdownMenu>
           </Dropdown>
         </NavbarContent>

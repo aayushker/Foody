@@ -6,6 +6,7 @@ import axios from 'axios';
 interface AuthContextType {
   user: any;
   isAuthenticated: boolean;
+  loading: boolean;
   setUser: (user: any) => void;
   login: (username: string, password: string) => void;
   logout: () => void;
@@ -15,6 +16,7 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType>({
   user: null,
   isAuthenticated: false,
+  loading: true,
   setUser: (user: any) => { },
   login: (username: string, password: string) => { },
   logout: () => { },
@@ -75,7 +77,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated, setUser, login, logout, register }}>
+    <AuthContext.Provider value={{ user, isAuthenticated, loading, setUser, login, logout, register }}>
       {children}
     </AuthContext.Provider>
   );
