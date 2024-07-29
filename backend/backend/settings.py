@@ -42,7 +42,7 @@ ALLOWED_HOSTS = ['*']
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000', 
-    'letsfoody.vercel.app',
+    'https://letsfoody.vercel.app',
     
 ]
 
@@ -160,14 +160,14 @@ DATABASE_URL=os.getenv('DATABASE_URL')
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': os.getenv('DATABASE_ENGINE'),
         'NAME': os.getenv('DATABASE_NAME'), 
         'USER': os.getenv('DATABASE_USER'),
         'PASSWORD': os.getenv('DATABASE_PASSWORD'),
-        'HOST': 'pg-338553bb-letsfoody.g.aivencloud.com', 
-        'PORT': '22120',
+        'HOST': os.getenv('DATABASE_HOST'), 
+        'PORT': os.getenv('DATABASE_PORT'),
         'OPTIONS': {
-            'sslmode': 'require',
+            'sslmode': os.getenv('DATABASE_SSLMODE'),
         },
     }
 }

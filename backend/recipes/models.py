@@ -19,7 +19,7 @@ class Recipe(models.Model):
 
     def __str__(self):
         return self.name
-
+    
 class Ingredient(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name='ingredients')
     quantity = models.CharField(max_length=50)
