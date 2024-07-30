@@ -3,11 +3,14 @@ import UserLayout from "@/app/userLayout";
 import UserPanel from "@/app/components/UserPanel";
 import withAuth from "@/app/withAuth";
 import "@/app/globals.css";
+import { AuthProvider } from "@/app/AuthContext";
 
 const Index = () => {
   return (
     <UserLayout>
-      <UserPanel />
+      <AuthProvider>
+        <UserPanel />
+      </AuthProvider>
     </UserLayout>
   );
 };
