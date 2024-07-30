@@ -11,7 +11,7 @@ const Logout = () => {
       <p className="text-black text-md drop-shadow-md">
         Click the button below to logout. 👋
     </p>
-    <button onClick={logout} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-4">
+    <button onClick={logout} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-4 w-24">
       Logout
     </button>
     </>
