@@ -40,10 +40,24 @@ export const getUserRecipes = async (token: any) => {
 };
 
 export const updateRecipe = async (token: any, recipeId: any, recipeData: any) => {
-  const response = await axios.put(`${API_URL}/api/user/recipes/${recipeId}/`, recipeData, {
+  const response = await axios.put(`${API_URL}/api/user/recipe/${recipeId}/`, recipeData, {
     headers: {
       Authorization: `Bearer ${token}`
     }
   });
+  return response.data;
+};
+
+export const deleteRecipe = async (token: any, recipeId: number) => {
+  const response = await axios.delete(`${API_URL}/api/user/recipe/${recipeId}/`, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+  return response.data;
+};
+
+export const fetchAllRecipes = async () => {
+  const response = await axios.get(`${API_URL}/api/recipes/`);
   return response.data;
 };

@@ -1,5 +1,4 @@
-"use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Sidebar, SidebarBody, SidebarLink } from "./ui/sidebar";
 import {
   IconArrowLeft,
@@ -12,6 +11,7 @@ import {
   IconUserFilled,
 } from "@tabler/icons-react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
@@ -21,15 +21,54 @@ import Recipes from "./sections/Recipes";
 import Settings from "./sections/Settings";
 import HelpSupport from "./sections/HelpSupport";
 import Logout from "./sections/Logout";
+import { getUserData } from "@/app/fetchData";
 
 export default function UserSidebar() {
+  const [userData, setUserData] = useState<{ username: string } | null>(null);
   const [activeSection, setActiveSection] = useState("Dashboard");
   const [open, setOpen] = useState(false);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("You are not logged in");
+      router.push("/");
+      return;
+    }
+
+    const fetchData = async () => {
+      try {
+        const data = await getUserData(token);
+        setUserData(data);
+      } catch (error) {
+        console.error("Error fetching user data", error);
+      }
+    };
+    fetchData();
+  }, [router]);
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.substring(1);
+      if (hash) {
+        setActiveSection(hash.charAt(0).toUpperCase() + hash.slice(1));
+      }
+    };
+
+    handleHashChange();
+    window.addEventListener("hashchange", handleHashChange);
+
+    return () => {
+      window.removeEventListener("hashchange", handleHashChange);
+    };
+  }, []);
 
   const links = [
     {
       label: "Dashboard",
-      href: "#",
+      href: "#dashboard",
       icon: (
         <IconBrandTabler className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
@@ -37,7 +76,7 @@ export default function UserSidebar() {
     },
     {
       label: "Profile",
-      href: "#",
+      href: "#profile",
       icon: (
         <IconUserBolt className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
@@ -45,7 +84,7 @@ export default function UserSidebar() {
     },
     {
       label: "My Recipes",
-      href: "#",
+      href: "#recipes",
       icon: (
         <IconBreadFilled className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
@@ -53,7 +92,7 @@ export default function UserSidebar() {
     },
     {
       label: "Settings",
-      href: "#",
+      href: "#settings",
       icon: (
         <IconSettings className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
@@ -61,7 +100,7 @@ export default function UserSidebar() {
     },
     {
       label: "Help and Support",
-      href: "#",
+      href: "#helpsupport",
       icon: (
         <IconHelp className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
@@ -69,7 +108,7 @@ export default function UserSidebar() {
     },
     {
       label: "Logout",
-      href: "#",
+      href: "#logout",
       icon: (
         <IconArrowLeft className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
@@ -101,7 +140,7 @@ export default function UserSidebar() {
           <div>
             <SidebarLink
               link={{
-                label: "User Name",
+                label: `${userData?.username}`,
                 href: "#",
                 icon: (
                   <IconUserFilled className="text-neutral-700 dark:text-neutral-200 h-7 w-7 flex-shrink-0 rounded" />
