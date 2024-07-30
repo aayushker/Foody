@@ -3,6 +3,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import ContactText from "./ui/contactText";
+import url from "@/baseurl";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -32,7 +33,7 @@ const Contact = () => {
 
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/smtp/",
+        `${url}/api/smtp`,
         formData,
         {
           headers: {
@@ -54,12 +55,7 @@ const Contact = () => {
 
   return (
     <div className="flex justify-around px-10 py-10 space-x-10">
-      <div className="flex-1 ">
-        <div className=" ">
-           <ContactText />
-        </div>
-       
-      </div>
+
 
       <div className="flex-1 max-w-lg mx-auto my-10 p-6 bg-white rounded-lg shadow-lg">
         <h2 className="text-2xl font-bold mb-6 text-center text-orange-600">
