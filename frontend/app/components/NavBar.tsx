@@ -11,7 +11,6 @@ import {
   Dropdown,
   DropdownMenu,
   Avatar,
-  Button,
 } from "@nextui-org/react";
 import { useAuth } from "../AuthContext";
 import Login from "./ui/auth/Login";
@@ -47,7 +46,7 @@ const NavBar: React.FC = () => {
 
   return (
     <>
-      <Navbar maxWidth="full">
+      <Navbar >
         <NavbarBrand>
           <Link href="/">
             <p className="font-bold text-inherit">Foodie</p>
@@ -55,7 +54,7 @@ const NavBar: React.FC = () => {
         </NavbarBrand>
 
         <NavbarContent className="hidden sm:flex gap-6" justify="center">
-          <Dropdown>
+          {/* <Dropdown>
             <NavbarItem>
               <DropdownTrigger>
                 <Button
@@ -113,10 +112,10 @@ const NavBar: React.FC = () => {
                 Glueten Free
               </DropdownItem>
             </DropdownMenu>
-          </Dropdown>
+          </Dropdown> */}
           <NavbarItem>
-            <Link href="#" aria-current="page" color="foreground">
-              Top Recipes
+            <Link href="/explore" aria-current="page" color="foreground">
+              Explore
             </Link>
           </NavbarItem>
           <NavbarItem>
