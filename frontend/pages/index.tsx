@@ -5,6 +5,7 @@ import Contact from "../app/components/Contact";
 import { AuthProvider } from "../app/AuthContext";
 import { useState } from "react";
 import "@/app/globals.css";
+import { ThemeProvider } from "@/app/ThemeContext";
 
 export default function Home() {
   const [isSignInOpen, setIsSignInOpen] = useState(false);
@@ -16,9 +17,11 @@ export default function Home() {
   return (
     <main className="w-full ">
       <AuthProvider>
-        <NavBar />
-        <Hero />
-        <Contact />
+        <ThemeProvider>
+          <NavBar />
+          <Hero />
+          <Contact />
+        </ThemeProvider>
       </AuthProvider>
     </main>
   );

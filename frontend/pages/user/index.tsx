@@ -4,12 +4,15 @@ import UserPanel from "@/app/components/UserPanel";
 import withAuth from "@/app/withAuth";
 import "@/app/globals.css";
 import { AuthProvider } from "@/app/AuthContext";
+import { ThemeProvider } from "@/app/ThemeContext";
 
 const Index = () => {
   return (
     <UserLayout>
       <AuthProvider>
-        <UserPanel />
+        <ThemeProvider>
+          <UserPanel />
+        </ThemeProvider>
       </AuthProvider>
     </UserLayout>
   );
