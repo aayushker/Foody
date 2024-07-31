@@ -11,11 +11,21 @@ import {
   Dropdown,
   DropdownMenu,
   Avatar,
+  DropdownSection,
+  User,
 } from "@nextui-org/react";
 import { useAuth } from "../AuthContext";
 import Login from "./ui/auth/Login";
 import Register from "./ui/auth/Register";
-import { ChevronDown } from "@/public/icons/Icons";
+import {
+  IconLogin,
+  IconLogout,
+  IconTablePlus,
+  IconPlus,
+  IconHelp,
+  IconChefHat,
+} from "@tabler/icons-react";
+import { useTheme } from "@/app/ThemeContext";
 
 const NavBar: React.FC = () => {
   const { isAuthenticated, user, logout } = useAuth();
@@ -38,18 +48,19 @@ const NavBar: React.FC = () => {
     setIsSignUpOpen(false);
   };
 
-  const icons = {
-    chevron: (
-      <ChevronDown fill="currentColor" size={16} height={16} width={16} />
-    ),
+  const { theme, setTheme } = useTheme();
+
+  const handleThemeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setTheme(event.target.value as 'light' | 'dark' | 'system');
   };
 
   return (
     <>
-      <Navbar >
+      <Navbar>
         <NavbarBrand>
-          <Link href="/">
-            <p className="font-bold text-inherit">Foodie</p>
+          <Link href="/" className="space-x-2">
+            <IconChefHat />
+            <p className="font-bold text-inherit">Foody</p>
           </Link>
         </NavbarBrand>
 
@@ -118,16 +129,33 @@ const NavBar: React.FC = () => {
               Explore
             </Link>
           </NavbarItem>
-          <NavbarItem>
-            <Link href="#" aria-current="page" color="foreground">
-              Blog
-            </Link>
-          </NavbarItem>
-          <NavbarItem>
-            <Link color="foreground" href="#">
-              About Us
-            </Link>
-          </NavbarItem>
+          {isAuthenticated ? (
+            <>
+              <NavbarItem>
+                <Link href="/user#recipes" color="foreground">
+                  Your Recipes
+                </Link>
+              </NavbarItem>
+              <NavbarItem>
+                <Link href="/user#dashboard" color="foreground">
+                  Dashboard
+                </Link>
+              </NavbarItem>
+            </>
+          ) : (
+            <>
+              <NavbarItem>
+                <Link href="#" color="foreground" onPress={handleSignInOpen}>
+                  Login
+                </Link>
+              </NavbarItem>
+              <NavbarItem>
+                <Link href="#" color="foreground" onPress={handleSignUpOpen}>
+                  Signup
+                </Link>
+              </NavbarItem>
+            </>
+          )}
           <NavbarItem>
             <Link color="foreground" href="#">
               Contact Us
@@ -136,7 +164,13 @@ const NavBar: React.FC = () => {
         </NavbarContent>
 
         <NavbarContent as="div" justify="end">
-          <Dropdown placement="bottom-end">
+          <Dropdown
+            radius="sm"
+            classNames={{
+              base: "before:bg-default-200", // change arrow background
+              content: "p-0 border-small border-divider bg-background",
+            }}
+          >
             <DropdownTrigger>
               <Avatar
                 isBordered
@@ -149,28 +183,122 @@ const NavBar: React.FC = () => {
               />
             </DropdownTrigger>
             {isAuthenticated ? (
-              <DropdownMenu aria-label="Profile Actions" variant="flat">
-                <DropdownItem className="h-14 gap-2">
-                  <p className="font-semibold">Hello👋,</p>
-                  <p className="font-semibold">{user.username}</p>
-                </DropdownItem>
-                <DropdownItem>
-                  <Link href="/user">Dashboard</Link>
-                </DropdownItem>
-                <DropdownItem>My Recipe</DropdownItem>
-                <DropdownItem>Favorites</DropdownItem>
-                <DropdownItem color="success">
-                  <Link href="/addRecipe">Add Recipe</Link>
-                </DropdownItem>
-                <DropdownItem color="danger" onPress={logout}>
-                  Log Out
-                </DropdownItem>
-              </DropdownMenu>
+              <>
+                <DropdownMenu
+                  aria-label="Custom item styles"
+                  disabledKeys={["profile"]}
+                  className="p-3"
+                  itemClasses={{
+                    base: [
+                      "rounded-md",
+                      "text-default-500",
+                      "transition-opacity",
+                      "data-[hover=true]:text-foreground",
+                      "data-[hover=true]:bg-default-100",
+                      "dark:data-[hover=true]:bg-default-50",
+                      "data-[selectable=true]:focus:bg-default-50",
+                      "data-[pressed=true]:opacity-70",
+                      "data-[focus-visible=true]:ring-default-500",
+                    ],
+                  }}
+                >
+                  <DropdownSection aria-label="Profile & Actions" showDivider>
+                    <DropdownItem
+                      isReadOnly
+                      key="profile"
+                      className="h-14 gap-2 opacity-100"
+                    >
+                      <User
+                        name="Hello👋,"
+                        description={user ? "@" + user.username : "Guest"}
+                        classNames={{
+                          name: "text-default-600",
+                          description: "text-default-500",
+                        }}
+                        avatarProps={{
+                          size: "sm",
+                          src: "/images/user.png",
+                        }}
+                      />
+                    </DropdownItem>
+
+                    <DropdownItem key="dashboard" href="/user#dashboard">
+                      Dashboard
+                    </DropdownItem>
+                    <DropdownItem key="settings" href="/user#settings">
+                      Settings
+                    </DropdownItem>
+                    <DropdownItem
+                      key="Add Recipe"
+                      endContent={<IconPlus className="text-large" />}
+                      href="/addRecipe"
+                      color="success"
+                    >
+                      <p className="text-success-600">Add Recipe</p>
+                    </DropdownItem>
+                  </DropdownSection>
+
+                  <DropdownSection aria-label="Preferences" showDivider>
+                    {/* <DropdownItem key="quick_search" shortcut="⌘K">
+                  Quick search
+                </DropdownItem> */}
+                    <DropdownItem
+                      isReadOnly
+                      key="theme"
+                      className="cursor-default"
+                      endContent={
+                        <select
+                          className="z-10 outline-none w-16 py-0.5 rounded-md text-tiny group-data-[hover=true]:border-default-500 border-small border-default-300 dark:border-default-200 bg-transparent text-default-500"
+                          id="theme"
+                          name="theme"
+                          value={theme}
+                          onChange={handleThemeChange}
+                        >
+                          <option value="system">System</option>
+                          <option value="dark">Dark</option>
+                          <option value="light">Light</option>
+                        </select>
+                      }
+                    >
+                      Theme
+                    </DropdownItem>
+                  </DropdownSection>
+
+                  <DropdownSection aria-label="Help & Feedback">
+                    <DropdownItem
+                      key="help_and_feedback"
+                      href="/user#helpsupport"
+                      endContent={<IconHelp type="sm" />}
+                    >
+                      Help & Feedback
+                    </DropdownItem>
+                    <DropdownItem
+                      key="logout"
+                      onPress={logout}
+                      endContent={<IconLogout type="sm" />}
+                    >
+                      <p className="text-red-400">Log Out</p>
+                    </DropdownItem>
+                  </DropdownSection>
+                </DropdownMenu>
+              </>
             ) : (
-              <DropdownMenu aria-label="Profile Actions" variant="flat">
-                <DropdownItem onPress={handleSignInOpen}>Login</DropdownItem>
-                <DropdownItem onPress={handleSignUpOpen}>Signup</DropdownItem>
-              </DropdownMenu>
+              <>
+                <DropdownMenu aria-label="Profile Actions" variant="flat">
+                  <DropdownItem
+                    onPress={handleSignInOpen}
+                    endContent={<IconLogin />}
+                  >
+                    Login
+                  </DropdownItem>
+                  <DropdownItem
+                    onPress={handleSignUpOpen}
+                    endContent={<IconTablePlus />}
+                  >
+                    Signup
+                  </DropdownItem>
+                </DropdownMenu>
+              </>
             )}
           </Dropdown>
         </NavbarContent>
