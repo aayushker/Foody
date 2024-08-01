@@ -1,8 +1,20 @@
-# Foody - Recipe Website
 
+<div align="center" style="display: flex; flex-direction: column; align-items: center;">
+
+# Foody - Recipe Website 
+*(under development)*
+
+<div>
+
+[![wakatime](https://wakatime.com/badge/user/018dccea-572d-4bff-b35f-74753ebb999c/project/fb23589a-a7d5-4332-8863-66398e69e6cd.svg)]()
+
+[![Vercel Deploy](https://deploy-badge.vercel.app/vercel/letsfoody)](https://letsfoody.vercel.app)
+
+</div>
+
+</div>
 Welcome to Foody, your go-to recipe website where you can explore, cook, and share your favorite dishes. This README provides detailed instructions on setting up, using, and understanding the features and technologies behind the Foody project.
 The project is built using the Django REST Framework for the backend API and Next.js for the frontend application. The application allows users to register, login, and manage recipes, with an admin panel for site management.
-The website is live at [Foody](https://letsfoody.vercel.app/)
 
 ## Table of Contents
 - [Features](#features)
@@ -42,7 +54,12 @@ The website is live at [Foody](https://letsfoody.vercel.app/)
   - Simple JWT
   - Django CORS Headers
   - Pipenv
+  - Render
+
+- **Database**
   - PostgreSQL
+  - Aiven
+  - Firebase 
 
 - **DevOps:**
   - Docker
@@ -100,6 +117,7 @@ The website is live at [Foody](https://letsfoody.vercel.app/)
 ## Project Structure
 The project is divided into two main directories: `frontend` and `backend`. The frontend directory contains the Next.js application, while the backend directory contains the Django REST API.
 
+<pre>
 Foody
 ├── backend
 │   ├── backend/
@@ -131,6 +149,7 @@ Foody
 │   │   ├── user/ index.tsx
 │   │   └── index.tsx
 └── README.md
+</pre>
 
 ## API Endpoints
 1. **Authentication:**
