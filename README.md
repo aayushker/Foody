@@ -1,16 +1,10 @@
-
+![Foody](https://socialify.git.ci/aayushker/Foody/image?description=1&font=Raleway&name=1&owner=1&pattern=Plus&theme=Auto)
 <div align="center" style="display: flex; flex-direction: column; align-items: center;">
 
-# Foody - Recipe Website 
 *(under development)*
 
-<div>
-
 [![wakatime](https://wakatime.com/badge/user/018dccea-572d-4bff-b35f-74753ebb999c/project/fb23589a-a7d5-4332-8863-66398e69e6cd.svg)]()
-
 [![Vercel Deploy](https://deploy-badge.vercel.app/vercel/letsfoody)](https://letsfoody.vercel.app)
-
-</div>
 
 </div>
 Welcome to Foody, your go-to recipe website where you can explore, cook, and share your favorite dishes. This README provides detailed instructions on setting up, using, and understanding the features and technologies behind the Foody project.
@@ -182,4 +176,4 @@ This is a private project for learning purposes, and contributions are not accep
 ## License
 This project is licensed under the [GNU GENERAL PUBLIC LICENSE](LICENSE).
 
-Happy cooking with Foody! If you have any questions, feel free to reach out to reach me at singhaayushker@gmail.com.
+Happy cooking with Foody! If you have any questions, feel free to reach me at singhaayushker@gmail.com.
