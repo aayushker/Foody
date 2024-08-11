@@ -9,7 +9,8 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 import HeroImage from "./ui/HeroImage";
-import { toast } from 'react-toastify'
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import url from "@/baseurl";
 
@@ -26,14 +27,15 @@ const Hero = () => {
     const checkBackend = async () => {
       try {
         const response = await axios.get(`${url}`);
-        console.log(response);
         if (response.status === 200) {
-          toast.success('Backend is now active!');
-          console.log('success');
+          toast.success("Backend is now active!", {
+            position: "bottom-right",
+          });
         }
       } catch (error) {
-        toast.error('Unable to connect to backend.');
-        console.log('error');
+        toast.error("Unable to connect to backend.", {
+          position: "bottom-right",
+        });
       }
     };
     checkBackend();
@@ -41,6 +43,7 @@ const Hero = () => {
 
   return (
     <>
+      <ToastContainer />
       <HeroImage />
       <div className="z-1 absolute inset-0 flex flex-col justify-center p-6 space-y-4 rounded-lg">
         <p className="text-white z-5 text-6xl font-bold drop-shadow-md bg-clip-text animate-gradient">
