@@ -1,5 +1,5 @@
-from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
 from django.core.mail import send_mail
 from django.conf import settings
 import json
@@ -13,13 +13,25 @@ def form(request):
         name = data.get('name', '')
         email = data.get('email', '')
 
-        send_mail(
-            subject=subject,
-            message=f"Name: {name}\nEmail: {email}\n\nMessage:\n{message}",
-            from_email=settings.EMAIL_HOST_USER,
-            recipient_list=[email, 'gdaskiet@gmail.com'],
-            fail_silently=False,
-        )
+        if not name:
+            return JsonResponse({'error': 'Name field is required'}, status=400)
+        if not email:
+            return JsonResponse({'error': 'Email field is required'}, status=400)
+        if not subject:
+            return JsonResponse({'error': 'Subject field is required'}, status=400)
+        if not message:
+            return JsonResponse({'error': 'Message field is required'}, status=400)
 
-        return JsonResponse({'status': 'success'})
+        try:
+            send_mail(
+                subject=subject,
+                message=f"Name: {name}\nEmail: {email}\n\nMessage:\n{message}",
+                from_email=settings.EMAIL_HOST_USER,
+                recipient_list=[email, 'gdaskiet@gmail.com'],
+                fail_silently=False,
+            )
+            return JsonResponse({'status': 'success'})
+        except Exception as e:
+            return JsonResponse({'error': 'Failed to send email'}, status=500)
+
     return JsonResponse({'error': 'Invalid request'}, status=400)
