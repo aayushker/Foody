@@ -9,6 +9,8 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 import HeroImage from "./ui/HeroImage";
+import { toast } from 'react-toastify'
+import axios from "axios";
 import url from "@/baseurl";
 
 const Hero = () => {
@@ -19,6 +21,23 @@ const Hero = () => {
       onOpen();
     }
   }, [onOpen]);
+
+  useEffect(() => {
+    const checkBackend = async () => {
+      try {
+        const response = await axios.get(`${url}`);
+        console.log(response);
+        if (response.status === 200) {
+          toast.success('Backend is now active!');
+          console.log('success');
+        }
+      } catch (error) {
+        toast.error('Unable to connect to backend.');
+        console.log('error');
+      }
+    };
+    checkBackend();
+  }, []);
 
   return (
     <>
