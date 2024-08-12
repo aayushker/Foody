@@ -12,8 +12,14 @@ export default function Footer() {
               <div className="flex align-middle justify-center">
                 <Link href="/" className="space-x-2 text-center">
                   <div className="flex justify-between align-middle">
-                    <IconChefHat size={52} className="p-2 text-black dark:text-white" type="lg" />
-                    <h6 className="text-5xl text-center text-black dark:text-white">Foody</h6>
+                    <IconChefHat
+                      size={52}
+                      className="p-2 text-black dark:text-white"
+                      type="lg"
+                    />
+                    <h6 className="text-5xl text-center text-black dark:text-white">
+                      Foody
+                    </h6>
                   </div>
                 </Link>
               </div>

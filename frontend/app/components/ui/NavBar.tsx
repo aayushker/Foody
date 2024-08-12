@@ -14,9 +14,9 @@ import {
   DropdownSection,
   User,
 } from "@nextui-org/react";
-import { useAuth } from "../AuthContext";
-import Login from "./ui/auth/Login";
-import Register from "./ui/auth/Register";
+import { useAuth } from "@/app/AuthContext";
+import Login from "@/app/components/ui/auth/Login";
+import Register from "@/app/components/ui/auth/Register";
 import {
   IconLogin,
   IconLogout,
@@ -51,7 +51,7 @@ const NavBar: React.FC = () => {
   const { theme, setTheme } = useTheme();
 
   const handleThemeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setTheme(event.target.value as 'light' | 'dark' | 'system');
+    setTheme(event.target.value as "light" | "dark" | "system");
   };
 
   return (

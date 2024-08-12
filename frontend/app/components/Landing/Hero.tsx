@@ -7,8 +7,8 @@ import {
   ModalFooter,
   Button,
   useDisclosure,
+  Image,
 } from "@nextui-org/react";
-import HeroImage from "./ui/HeroImage";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
@@ -44,7 +44,12 @@ const Hero = () => {
   return (
     <>
       <ToastContainer />
-      <HeroImage />
+      <Image
+        width={1920}
+        alt="Hero Image"
+        src="/images/hero.jpg"
+        className="z-0 h-screen object-cover overflow-hidden"
+      />
       <div className="z-1 absolute inset-0 flex flex-col justify-center p-6 space-y-4 rounded-lg">
         <p className="text-white z-5 text-6xl font-bold drop-shadow-md bg-clip-text animate-gradient">
           <strong className="text-9xl">Share</strong> and{" "}

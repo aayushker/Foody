@@ -1,5 +1,5 @@
 import React from "react";
-import UserSidebar from "./UserPanel/UserSidebar";
+import UserSidebar from "./UserPanel/AddRecipe";
 
 const UserPanel = () => {
   return (

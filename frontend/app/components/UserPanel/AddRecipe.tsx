@@ -23,7 +23,7 @@ import HelpSupport from "./sections/HelpSupport";
 import Logout from "./sections/Logout";
 import { getUserData } from "@/app/fetchData";
 
-export default function UserSidebar() {
+export default function addRecipe() {
   const [userData, setUserData] = useState<{ username: string } | null>(null);
   const [activeSection, setActiveSection] = useState("Dashboard");
   const [open, setOpen] = useState(false);

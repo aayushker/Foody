@@ -103,7 +103,7 @@ export default function Addrecipe() {
           <div>
             <SidebarLink
               link={{
-                label: `${user.username}`,
+                label: user ? `${user.username}` : "Guest",
                 href: "#",
                 icon: (
                   <IconUserFilled className="text-neutral-700 dark:text-neutral-200 h-7 w-7 flex-shrink-0 rounded" />
