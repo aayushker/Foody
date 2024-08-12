@@ -1,11 +1,12 @@
 import React from "react";
 import axios from "axios";
-import { useRecipeInfo } from "../../context/RecipeInfoContext";
-import { useIngredients } from "../../context/IngredientsContext";
-import { useInstructions } from "../../context/InstructionsContext";
-import { useNutritionalInfo } from "../../context/NutritionalInfoContext";
-import { useRouter } from 'next/router';
-import  baseurl  from "@/baseurl";
+import { Button } from "@nextui-org/react";
+import { useRecipeInfo } from "@/app/components/context/RecipeInfoContext";
+import { useIngredients } from "@/app/components/context/IngredientsContext";
+import { useInstructions } from "@/app/components/context/InstructionsContext";
+import { useNutritionalInfo } from "@/app/components/context/NutritionalInfoContext";
+import { useRouter } from "next/router";
+import baseurl from "@/baseurl";
 
 const Submit = () => {
   const { recipeInfo } = useRecipeInfo();
@@ -17,7 +18,6 @@ const Submit = () => {
   const Router = useRouter();
 
   const token = localStorage.getItem("token");
-  // console.log("Token:", token); 
 
   if (!token) {
     alert("Please login to submit a recipe");
@@ -92,25 +92,30 @@ const Submit = () => {
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`, 
+            Authorization: `Bearer ${token}`,
           },
         }
       );
       console.log("Data submitted successfully:", response.data);
     } catch (error) {
-      console.error("Error submitting data:", (error as any).response?.data || error);
+      console.error(
+        "Error submitting data:",
+        (error as any).response?.data || error
+      );
     }
   };
 
   return (
     <>
-      <p className="text-black text-2xl font-semibold drop-shadow-md bg-clip-text animate-gradient">
+      <p className="text-black dark:text-white text-2xl font-semibold drop-shadow-md bg-clip-text animate-gradient">
         Submit 🚀
       </p>
-      <p className="text-black text-md drop-shadow-md">
+      <p className="text-black dark:text-gray-300 text-md drop-shadow-md">
         Submit your recipe to share it with the world! 🌍
       </p>
-      <button onClick={handleSubmit}>Submit Recipe</button>
+      <Button onClick={handleSubmit} color="success" className="max-w-md">
+        Submit Recipe
+      </Button>
     </>
   );
 };

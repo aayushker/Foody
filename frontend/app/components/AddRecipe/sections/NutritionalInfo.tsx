@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Input, Switch, Spacer } from "@nextui-org/react";
-import { useNutritionalInfo } from "../../context/NutritionalInfoContext";
+import { useNutritionalInfo } from "@/app/components/context/NutritionalInfoContext";
 
 // known issue: the button state is not preserving
 
@@ -48,10 +48,10 @@ const NutritionalInfo = () => {
 
   return (
     <>
-      <p className="text-black text-2xl font-semibold drop-shadow-md bg-clip-text animate-gradient">
+      <p className="text-black dark:text-white text-2xl font-semibold drop-shadow-md bg-clip-text animate-gradient">
         Nutritional Information 🍄
       </p>
-      <p className="text-black text-md drop-shadow-md">
+      <p className="text-black dark:text-gray-300 text-md drop-shadow-md">
         Add some nutritional information to help your readers make informed
         decisions about their meals! 🥗
       </p>

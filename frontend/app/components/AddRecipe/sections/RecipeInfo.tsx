@@ -1,27 +1,45 @@
 import React, { useState, useEffect } from "react";
-import { Input, Textarea, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button } from "@nextui-org/react";
-import { useRecipeInfo } from "../../context/RecipeInfoContext";
+import {
+  Input,
+  Textarea,
+  Dropdown,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownItem,
+  Button,
+} from "@nextui-org/react";
+import { useRecipeInfo } from "@/app/components/context/RecipeInfoContext";
 
 const RecipeInfo = () => {
   const { recipeInfo, setRecipeInfo } = useRecipeInfo();
-  const [selectedDifficulty, setSelectedDifficulty] = useState<string>(recipeInfo.difficulty);
-  const [selectedCuisine, setSelectedCuisine] = useState<string>(recipeInfo.cuisine);
+  const [selectedDifficulty, setSelectedDifficulty] = useState<string>(
+    recipeInfo.difficulty
+  );
+  const [selectedCuisine, setSelectedCuisine] = useState<string>(
+    recipeInfo.cuisine
+  );
 
   useEffect(() => {
-    setRecipeInfo({ ...recipeInfo, difficulty: selectedDifficulty, cuisine: selectedCuisine });
+    setRecipeInfo({
+      ...recipeInfo,
+      difficulty: selectedDifficulty,
+      cuisine: selectedCuisine,
+    });
   }, [selectedDifficulty, selectedCuisine]);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setRecipeInfo({ ...recipeInfo, [name]: value });
   };
 
   return (
     <>
-      <p className="text-black text-2xl font-semibold drop-shadow-md bg-clip-text animate-gradient">
+      <p className="text-black dark:text-white text-2xl font-semibold drop-shadow-md bg-clip-text animate-gradient">
         Add something tasty 😋
       </p>
-      <p className="text-black text-md drop-shadow-md">
+      <p className="text-black dark:text-gray-300 text-md drop-shadow-md">
         Add some details to tell us what you're cooking up! 🍳
       </p>
 
@@ -56,7 +74,11 @@ const RecipeInfo = () => {
         label="Total Time"
         placeholder="0"
         labelPlacement="outside-left"
-        startContent={<div className="pointer-events-none flex items-center"><span className="text-default-400 text-small">Minutes</span></div>}
+        startContent={
+          <div className="pointer-events-none flex items-center">
+            <span className="text-default-400 text-small">Minutes</span>
+          </div>
+        }
         maxLength={1}
         width={1}
         className="max-w-xs py-2"
@@ -71,7 +93,11 @@ const RecipeInfo = () => {
         label="Total Calories"
         placeholder="0"
         labelPlacement="outside-left"
-        startContent={<div className="pointer-events-none flex items-center"><span className="text-default-400 text-small">Calories</span></div>}
+        startContent={
+          <div className="pointer-events-none flex items-center">
+            <span className="text-default-400 text-small">Calories</span>
+          </div>
+        }
         maxLength={1}
         width={1}
         className="max-w-xs py-2"
@@ -89,7 +115,7 @@ const RecipeInfo = () => {
         labelPlacement="outside-left"
         maxLength={1}
         width={1}
-        className="max-w-xs py-2" 
+        className="max-w-xs py-2"
         description="Please tell the total servings (Required)"
         name="servings"
         value={recipeInfo.servings.toString()}
@@ -121,7 +147,9 @@ const RecipeInfo = () => {
             disallowEmptySelection
             selectionMode="single"
             selectedKeys={new Set([selectedDifficulty])}
-            onSelectionChange={(keys) => setSelectedDifficulty(Array.from(keys)[0].toString())}
+            onSelectionChange={(keys) =>
+              setSelectedDifficulty(Array.from(keys)[0].toString())
+            }
           >
             <DropdownItem key="Beginner">Beginner</DropdownItem>
             <DropdownItem key="Intermediate">Intermediate</DropdownItem>
@@ -143,7 +171,9 @@ const RecipeInfo = () => {
             disallowEmptySelection
             selectionMode="single"
             selectedKeys={new Set([selectedCuisine])}
-            onSelectionChange={(keys) => setSelectedCuisine(Array.from(keys)[0].toString())}
+            onSelectionChange={(keys) =>
+              setSelectedCuisine(Array.from(keys)[0].toString())
+            }
           >
             <DropdownItem key="Indian">Indian Cuisine</DropdownItem>
             <DropdownItem key="Italian">Italian Cuisine</DropdownItem>

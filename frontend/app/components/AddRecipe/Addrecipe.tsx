@@ -21,9 +21,11 @@ import Instructions from "./sections/Instructions";
 import Pictures from "./sections/Pictures";
 import NutritionalInfo from "./sections/NutritionalInfo";
 import Submit from "./sections/Submit";
+import { useAuth } from "@/app/AuthContext";
 
-export default function AddRecipeSidebar() {
+export default function Addrecipe() {
   const [activeSection, setActiveSection] = useState("Recipe Info");
+  const { user } = useAuth();
   const [open, setOpen] = useState(true);
 
   const links = [
@@ -101,7 +103,7 @@ export default function AddRecipeSidebar() {
           <div>
             <SidebarLink
               link={{
-                label: "User Name",
+                label: `${user.username}`,
                 href: "#",
                 icon: (
                   <IconUserFilled className="text-neutral-700 dark:text-neutral-200 h-7 w-7 flex-shrink-0 rounded" />

@@ -1,6 +1,5 @@
 import React from "react";
-import AddRecipeNavBar from "@/app/components/AddRecipe/AddRecipeNavBar";
-import AddRecipeSidebar from "@/app/components/AddRecipe/AddRecipeSidebar";
+import Addrecipe from "@/app/components/AddRecipe/Addrecipe";
 import { RecipeInfoProvider } from "@/app/components/context/RecipeInfoContext";
 import { IngredientsProvider } from "@/app/components/context/IngredientsContext";
 import { InstructionsProvider } from "@/app/components/context/InstructionsContext";
@@ -10,21 +9,17 @@ import { NutritionalInfoProvider } from "@/app/components/context/NutritionalInf
 const AddRecipe = () => {
   return (
     <>
-      <>{/* <AddRecipeNavBar /> */}</>
-
-      <>
-        <RecipeInfoProvider>
-          <IngredientsProvider>
-            <InstructionsProvider>
-              <PicturesProvider>
-                <NutritionalInfoProvider>
-                  <AddRecipeSidebar />
-                </NutritionalInfoProvider>
-              </PicturesProvider>
-            </InstructionsProvider>
-          </IngredientsProvider>
-        </RecipeInfoProvider>
-      </>
+      <RecipeInfoProvider>
+        <IngredientsProvider>
+          <InstructionsProvider>
+            <PicturesProvider>
+              <NutritionalInfoProvider>
+                <Addrecipe />
+              </NutritionalInfoProvider>
+            </PicturesProvider>
+          </InstructionsProvider>
+        </IngredientsProvider>
+      </RecipeInfoProvider>
     </>
   );
 };

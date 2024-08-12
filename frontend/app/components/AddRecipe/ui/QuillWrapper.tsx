@@ -22,10 +22,10 @@ const QuillWrapper: React.FC<QuillWrapperProps> = ({
       [{ size: ["small", false, "large", "huge"] }],
       [{ list: "ordered" }, { list: "bullet" }],
       ["bold", "italic", "underline"],
-      [{ 'color': [] }, { 'background': [] }], 
+      [{ color: [] }, { background: [] }],
       ["link"],
-      ["clean"],    
-      [{ 'align': [] }],
+      ["clean"],
+      [{ align: [] }],
     ],
   };
 

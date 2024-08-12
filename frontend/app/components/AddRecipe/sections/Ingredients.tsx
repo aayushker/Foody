@@ -13,7 +13,7 @@ import {
   PopoverTrigger,
   PopoverContent,
 } from "@nextui-org/react";
-import { useIngredients } from "../../context/IngredientsContext";
+import { useIngredients } from "@/app/components/context/IngredientsContext";
 
 const Ingredients = () => {
   const { ingredients, setIngredients } = useIngredients();
@@ -36,7 +36,11 @@ const Ingredients = () => {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
   const addIngredient = () => {
-    if (!newIngredient.quantity || !newIngredient.unit || !newIngredient.ingredient) {
+    if (
+      !newIngredient.quantity ||
+      !newIngredient.unit ||
+      !newIngredient.ingredient
+    ) {
       setIsPopoverOpen(true);
       return;
     }
@@ -58,10 +62,10 @@ const Ingredients = () => {
 
   return (
     <>
-      <p className="text-black text-2xl font-semibold drop-shadow-md bg-clip-text animate-gradient">
+      <p className="text-black dark:text-white text-2xl font-semibold drop-shadow-md bg-clip-text animate-gradient">
         Ingredients 🥦
       </p>
-      <p className="text-black text-md drop-shadow-md">
+      <p className="text-black dark:text-gray-300 text-md drop-shadow-md">
         Add ingredients to your recipe! 🍽
       </p>
 
