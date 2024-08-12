@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Card, CardHeader, CardBody, Image } from "@nextui-org/react";
 import { fetchAllRecipes } from "@/app/fetchData";
-import NavBar from "./NavBar";
+import NavBar from "@/app/components/ui/NavBar";
 
 interface Recipe {
   id: number;
@@ -41,7 +41,7 @@ const Explore = () => {
 
   return (
     <>
-    <NavBar />
+      <NavBar />
       <div className="px-6 py-2">
         <div className="grid-container">
           {recipes.map((recipe) => (
