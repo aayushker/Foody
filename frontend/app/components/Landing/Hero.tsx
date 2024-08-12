@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect } from "react";
 import {
   Modal,
@@ -30,17 +31,19 @@ const Hero = () => {
         if (response.status === 200) {
           toast.success("Backend is now active!", {
             position: "bottom-right",
+            toastId: "backend-active",
           });
         }
       } catch (error) {
         toast.error("Unable to connect to backend.", {
           position: "bottom-right",
+          toastId: "backend-error",
         });
       }
     };
     checkBackend();
   }, []);
-
+  
   return (
     <>
       <ToastContainer />
