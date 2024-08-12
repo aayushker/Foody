@@ -18,11 +18,11 @@ import url from "@/baseurl";
 const Hero = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
-  useEffect(() => {
-    if (url !== "http://localhost:8000") {
-      onOpen();
-    }
-  }, [onOpen]);
+  // useEffect(() => {
+  //   if (url !== "http://localhost:8000") {
+  //     onOpen();
+  //   }
+  // }, [onOpen]);
 
   useEffect(() => {
     const checkBackend = async () => {
@@ -69,7 +69,7 @@ const Hero = () => {
         </p>
       </div>
 
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+      {/* <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
           {(onClose) => (
             <>
@@ -92,7 +92,7 @@ const Hero = () => {
             </>
           )}
         </ModalContent>
-      </Modal>
+      </Modal> */}
     </>
   );
 };
