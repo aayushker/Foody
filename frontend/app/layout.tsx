@@ -4,7 +4,7 @@ import { NextUIProvider } from "@nextui-org/react";
 
 const inter = Roboto({ subsets: ["latin"], weight: ["400", "500", "700"] });
 
-const metadata: Metadata = {
+export const metadata: Metadata = {
   title: "Foody",
   description: "A recipe sharing platform",
 };
@@ -16,6 +16,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/favicon.ico" />
+      </head>
       <body className={inter.className}>
         <NextUIProvider>{children}</NextUIProvider>
       </body>
