@@ -1,8 +1,14 @@
-import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
-import { useRouter } from 'next/router';
-import {jwtDecode} from 'jwt-decode';
-import axios from 'axios';
-import  baseurl  from '@/baseurl';
+import React, {
+  createContext,
+  useState,
+  useContext,
+  ReactNode,
+  useEffect,
+} from "react";
+import { useRouter } from "next/router";
+import { jwtDecode } from "jwt-decode";
+import axios from "axios";
+import baseurl from "@/baseurl";
 
 interface AuthContextType {
   user: any;
@@ -11,17 +17,29 @@ interface AuthContextType {
   setUser: (user: any) => void;
   login: (username: string, password: string) => void;
   logout: () => void;
-  register: (username: string, password: string, email: string, firstName: string, lastName: string) => void;
+  register: (
+    username: string,
+    password: string,
+    email: string,
+    firstName: string,
+    lastName: string
+  ) => void;
 }
 
 const AuthContext = createContext<AuthContextType>({
   user: null,
   isAuthenticated: false,
   loading: true,
-  setUser: (user: any) => { },
-  login: (username: string, password: string) => { },
-  logout: () => { },
-  register: (username: string, password: string, email: string, firstName: string, lastName: string) => { }
+  setUser: (user: any) => {},
+  login: (username: string, password: string) => {},
+  logout: () => {},
+  register: (
+    username: string,
+    password: string,
+    email: string,
+    firstName: string,
+    lastName: string
+  ) => {},
 });
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
@@ -32,17 +50,17 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const isAuthenticated = !!user;
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     if (token) {
       try {
         const decodedToken: any = jwtDecode(token);
         if (decodedToken.exp * 1000 < Date.now()) {
-          localStorage.removeItem('token');
+          localStorage.removeItem("token");
         } else {
           setUser(decodedToken);
         }
       } catch (error) {
-        localStorage.removeItem('token');
+        localStorage.removeItem("token");
         setUser(null);
         console.error(error);
       }
@@ -53,37 +71,62 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const login = async (username: string, password: string) => {
     try {
       // const response = await axios.post('http://127.0.0.1:8000/api/token/', { username, password });
-      const response = await axios.post(`${baseurl}/api/token/`, { username, password });
+      const response = await axios.post(`${baseurl}/api/token/`, {
+        username,
+        password,
+      });
       const { access, refresh } = response.data;
-      localStorage.setItem('token', access);
+      localStorage.setItem("token", access);
       setUser(jwtDecode(access));
-      router.push('/');
+      router.push("/");
     } catch (error) {
-      console.error('Login failed', error);
+      console.error("Login failed", error);
     }
   };
 
   const logout = () => {
-    localStorage.removeItem('token');
+    localStorage.removeItem("token");
     setUser(null);
-    router.push('/');
+    router.push("/");
   };
 
-  const register = async (username: string, password: string, email: string, firstName: string, lastName: string) => {
+  const register = async (
+    username: string,
+    password: string,
+    email: string,
+    firstName: string,
+    lastName: string
+  ) => {
     try {
       // await axios.post('http://127.0.0.1:8000/api/register/', { username, password, email, first_name: firstName, last_name: lastName });
-      await axios.post(`${baseurl}/api/register/`, { username, password, email, first_name: firstName, last_name: lastName });
-      router.push('/');
+      await axios.post(`${baseurl}/api/register/`, {
+        username,
+        password,
+        email,
+        first_name: firstName,
+        last_name: lastName,
+      });
+      router.push("/");
     } catch (error) {
-      console.error('Register failed', error);
+      console.error("Register failed", error);
     }
   };
 
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated, loading, setUser, login, logout, register }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        isAuthenticated,
+        loading,
+        setUser,
+        login,
+        logout,
+        register,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
-}
+};
 
 export const useAuth = () => useContext(AuthContext);
