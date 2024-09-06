@@ -1,9 +1,10 @@
 import React from "react";
 import AddRecipe from "@/app/components/AddRecipe";
 import withAuth from "@/app/withAuth";
-import "@/app/globals.css";
 import { AuthProvider } from "@/app/AuthContext";
 import { ThemeProvider } from "@/app/ThemeContext";
+import ProtectedRoute from "@/app/ProtectedRoutes";
+import "@/app/globals.css";
 
 const index = () => {
   return (
@@ -17,4 +18,4 @@ const index = () => {
   );
 };
 
-export default withAuth(index);
+export default ProtectedRoute(withAuth(index));
