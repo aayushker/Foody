@@ -1,21 +1,26 @@
-import { useAuth } from "@/app/AuthContext";
+"use client";
 import { useRouter } from "next/router";
-import { ComponentType, useEffect } from "react";
+import { ComponentType, useEffect, useState } from "react";
 
 const ProtectedRoute = (Component: ComponentType) => {
-  return () => {
-    const { user } = useAuth();
+  return (props: any) => {
+    const [token, setToken] = useState<string | null>(null);
     const router = useRouter();
 
     useEffect(() => {
-      if (!user) {
+      const storedToken = localStorage.getItem("token");
+      setToken(storedToken);
+
+      if (!storedToken) {
+        console.log("Redirecting to home page");
         router.push("/");
       }
-    }, [user]);
+    }, [router]);
 
-    if (!user) return null;
+    if (token === null) return <div>Loading...</div>;
+    if (!token) return null;
 
-    return <Component />;
+    return <Component {...props} />;
   };
 };
 
