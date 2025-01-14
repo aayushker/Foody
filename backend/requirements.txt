@@ -14,4 +14,4 @@ PyJWT==2.8.0
 python-dotenv==1.0.1
 setuptools==70.3.0
 sqlparse==0.5.0
-virtualenv==20.26.3
+virtualenv==20.26.6
