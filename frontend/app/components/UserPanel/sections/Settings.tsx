@@ -29,28 +29,39 @@ const Settings = () => {
   };
 
   return (
-    <div>
-      <h1>Update Credentials</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Email</label>
-          <input
-            type="email"
-            name="email"
-            value={credentials.email}
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <label>Password</label>
-          <input
-            type="password"
-            name="password"
-            value={credentials.password}
-            onChange={handleChange}
-          />
-        </div>
-        <button type="submit">Update Credentials</button>
+    <div className="bg-white p-6 rounded-lg shadow-md max-w-md mx-auto">
+      <h1 className="text-2xl font-bold text-center mb-6 text-gray-800">Update Credentials</h1>
+      <form onSubmit={handleSubmit} className="space-y-4">
+      <div className="space-y-2">
+        <label className="block text-sm font-medium text-gray-700">Email</label>
+        <input
+        type="email"
+        name="email"
+        value={credentials.email}
+        onChange={handleChange}
+        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
+        placeholder="Enter your email"
+        required
+        />
+      </div>
+      <div className="space-y-2">
+        <label className="block text-sm font-medium text-gray-700">Password</label>
+        <input
+        type="password"
+        name="password"
+        value={credentials.password}
+        onChange={handleChange}
+        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
+        placeholder="Enter your new password"
+        required
+        />
+      </div>
+      <button 
+        type="submit"
+        className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-200"
+      >
+        Update Credentials
+      </button>
       </form>
     </div>
   );
