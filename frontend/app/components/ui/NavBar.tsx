@@ -129,6 +129,11 @@ const NavBar: React.FC = () => {
               Explore
             </Link>
           </NavbarItem>
+          <NavbarItem>
+            <Link href="/recipe-assistant" color="foreground">
+              Recipe Assistant
+            </Link>
+          </NavbarItem>
           {isAuthenticated ? (
             <>
               <NavbarItem>
