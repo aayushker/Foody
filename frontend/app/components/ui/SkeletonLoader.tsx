@@ -1,4 +1,5 @@
 import React from 'react';
+import '@/app/globals.css';
 
 interface SkeletonLoaderProps {
   type: 'recipe-card' | 'profile-card' | 'dashboard-card' | 'text';
