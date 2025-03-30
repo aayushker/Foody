@@ -76,7 +76,40 @@ export const deleteRecipe = async (token: any, recipeId: number) => {
   return response.data;
 };
 
+
 export const fetchAllRecipes = async () => {
   const response = await axios.get(`${API_URL}/api/recipes/`);
+  return response.data;
+};
+
+export const searchRecipesByQuery = async (query: string) => {
+  const response = await axios.post(`${API_URL}/api/recipe-search/query/`, {
+    query: query,
+  });
+  return response.data;
+};
+
+export const searchRecipesByIngredients = async (ingredients: string[]) => {
+  const response = await axios.post(`${API_URL}/api/recipe-search/ingredients/`, {
+    ingredients: ingredients,
+  });
+  return response.data;
+};
+
+export const getRecipeDetails = async (recipeId: number) => {
+  const response = await axios.get(`${API_URL}/api/recipe-search/detail/${recipeId}/`);
+  return response.data;
+};
+
+export const submitRecipeFeedback = async (token: string, recommendationId: number, feedback: any) => {
+  const response = await axios.post(
+    `${API_URL}/api/recipe-search/feedback/${recommendationId}/`,
+    feedback,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
   return response.data;
 };
