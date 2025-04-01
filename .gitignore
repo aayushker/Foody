@@ -33,3 +33,5 @@ __pycache__
 *.db
 *.env
 *.env.*
+*.pkl
+*.csv
