@@ -5,6 +5,7 @@ import { Button } from "@nextui-org/react";
 import { IconPencil, IconPlus, IconTrash } from "@tabler/icons-react";
 import { Card, CardHeader, CardBody, Image, Tooltip } from "@nextui-org/react";
 import Link from "next/link";
+import SkeletonLoader from "@/app/components/ui/SkeletonLoader";
 
 interface Recipe {
   id: number;
@@ -112,7 +113,40 @@ const Recipes = () => {
     }
   };
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) {
+    return (
+      <div>
+        <div className="flex justify-between mb-8">
+          <div>
+            <div className="h-8 w-48 bg-gray-200 rounded-md mb-2"></div>
+            <div className="h-6 w-64 bg-gray-200 rounded-md"></div>
+          </div>
+          <div className="h-10 w-32 bg-gray-200 rounded-md"></div>
+        </div>
+        <div className="grid-container">
+          {[1, 2, 3, 4, 5, 6].map((index) => (
+            <Card className="py-4 max-w-sm" key={index}>
+              <div className="flex justify-between align-middle">
+                <div className="flex-1">
+                  <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
+                    <div className="h-6 w-3/4 bg-gray-200 rounded-md mb-2"></div>
+                    <div className="h-4 w-full bg-gray-200 rounded-md"></div>
+                  </CardHeader>
+                </div>
+                <div className="flex flex-col pr-2 justify-center gap-y-1">
+                  <div className="h-8 w-8 bg-gray-200 rounded-md mb-1"></div>
+                  <div className="h-8 w-8 bg-gray-200 rounded-md"></div>
+                </div>
+              </div>
+              <CardBody className="overflow-visible py-2">
+                <div className="h-48 w-full bg-gray-200 rounded-xl"></div>
+              </CardBody>
+            </Card>
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>
