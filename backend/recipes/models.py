@@ -11,7 +11,7 @@ class Recipe(models.Model):
     tags = models.CharField(max_length=255)
     difficulty = models.CharField(max_length=50)
     cuisine = models.CharField(max_length=50)
-    main_image = models.ImageField(upload_to='recipe_images/', blank=True, null=True)
+    main_image = models.URLField(max_length=500, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     likes = models.IntegerField(default=0)
@@ -58,7 +58,7 @@ class Comment(models.Model):
 
 class Image(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name='images')
-    image = models.ImageField(upload_to='recipe_images/')
+    image = models.URLField(max_length=500)
     
     def __str__(self):
         return f"Image for {self.recipe.name}"
