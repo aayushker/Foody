@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import { Button } from "@nextui-org/react";
+import { Button, Progress } from "@nextui-org/react";
 import { useRecipeInfo } from "@/app/components/context/RecipeInfoContext";
 import { useIngredients } from "@/app/components/context/IngredientsContext";
 import { useInstructions } from "@/app/components/context/InstructionsContext";
 import { useNutritionalInfo } from "@/app/components/context/NutritionalInfoContext";
+import { usePictures } from "@/app/components/context/PicturesContext";
 import { useRouter } from "next/router";
 import baseurl from "@/baseurl";
 
@@ -14,6 +15,12 @@ const Submit = () => {
   const { instructions } = useInstructions();
   const { showNutritionalInfo, calories, protein, fat, carbohydrates } =
     useNutritionalInfo();
+  const { mainImageUrl, cloudinaryUrls } = usePictures();
+  
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitProgress, setSubmitProgress] = useState(0);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
 
   const Router = useRouter();
 
@@ -24,6 +31,7 @@ const Submit = () => {
     Router.push("/");
     return null;
   }
+  
   const validateData = () => {
     if (
       !recipeInfo.name ||
@@ -54,9 +62,14 @@ const Submit = () => {
 
   const handleSubmit = async () => {
     if (!validateData()) {
-      alert("Please fill all required fields");
+      setError("Please fill all required fields");
       return;
     }
+
+    setIsSubmitting(true);
+    setError(null);
+    setSuccess(false);
+    setSubmitProgress(10);
 
     const data = {
       name: recipeInfo.name,
@@ -80,13 +93,14 @@ const Submit = () => {
         fat,
         carbohydrates,
       },
+      main_image: mainImageUrl,
+      additional_images: cloudinaryUrls,
     };
 
-    console.log("Data to submit:", data);
+    setSubmitProgress(30);
 
     try {
       const response = await axios.post(
-        // "http://127.0.0.1:8000/api/addRecipe/",
         `${baseurl}/api/addRecipe/`,
         data,
         {
@@ -94,14 +108,32 @@ const Submit = () => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
+          onUploadProgress: (progressEvent) => {
+            const percentCompleted = Math.round(
+              (progressEvent.loaded * 100) / (progressEvent.total || 1)
+            );
+            setSubmitProgress(30 + (percentCompleted * 0.7)); // Scale from 30% to 100%
+          },
         }
       );
+      
+      setSubmitProgress(100);
+      setSuccess(true);
       console.log("Data submitted successfully:", response.data);
+      
+      // Redirect to the recipe page after a short delay
+      setTimeout(() => {
+        Router.push(`/recipe-details/${response.data.id}`);
+      }, 2000);
+      
     } catch (error) {
       console.error(
         "Error submitting data:",
         (error as any).response?.data || error
       );
+      setError("Failed to submit recipe. Please try again.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -113,9 +145,41 @@ const Submit = () => {
       <p className="text-black dark:text-gray-300 text-md drop-shadow-md">
         Submit your recipe to share it with the world! 🌍
       </p>
-      <Button onClick={handleSubmit} color="success" className="max-w-md">
-        Submit Recipe
+      
+      {error && (
+        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+          {error}
+        </div>
+      )}
+      
+      {success && (
+        <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+          Recipe submitted successfully! Redirecting to your recipe page...
+        </div>
+      )}
+      
+      <Button 
+        onClick={handleSubmit} 
+        color="success" 
+        className="max-w-md"
+        isLoading={isSubmitting}
+        disabled={isSubmitting}
+      >
+        {isSubmitting ? "Submitting..." : "Submit Recipe"}
       </Button>
+      
+      {isSubmitting && (
+        <div className="mt-4">
+          <Progress 
+            value={submitProgress} 
+            color="success" 
+            showValueLabel={true}
+          />
+          <p className="text-sm text-gray-500 mt-2">
+            Submitting your recipe... {submitProgress}%
+          </p>
+        </div>
+      )}
     </>
   );
 };
