@@ -1,9 +1,24 @@
 import React, { useState } from "react";
-import { Input, Image, Spacer, Button } from "@nextui-org/react";
+import { Input, Image, Spacer, Button, Progress } from "@nextui-org/react";
 import { usePictures } from "@/app/components/context/PicturesContext";
+import axios from "axios";
+import baseurl from "@/baseurl";
 
 const Pictures = () => {
-  const { images, mainImage, setImages, setMainImage } = usePictures();
+  const { 
+    images, 
+    mainImage, 
+    cloudinaryUrls,
+    mainImageUrl,
+    setImages, 
+    setMainImage,
+    setCloudinaryUrls,
+    setMainImageUrl
+  } = usePictures();
+  
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [error, setError] = useState<string | null>(null);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -19,6 +34,81 @@ const Pictures = () => {
 
   const handleRemoveImage = (index: number) => {
     setImages(images.filter((_, i) => i !== index));
+    // Also remove the corresponding Cloudinary URL if it exists
+    if (cloudinaryUrls[index]) {
+      setCloudinaryUrls(cloudinaryUrls.filter((_, i) => i !== index));
+    }
+  };
+
+  const uploadImageToCloudinary = async (file: File, isMainImage = false) => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      setError("Authentication required. Please log in.");
+      return null;
+    }
+
+    const formData = new FormData();
+    formData.append("image", file);
+
+    try {
+      const response = await axios.post(
+        `${baseurl}/api/upload-image/`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+          onUploadProgress: (progressEvent) => {
+            const percentCompleted = Math.round(
+              (progressEvent.loaded * 100) / (progressEvent.total || 1)
+            );
+            setUploadProgress(percentCompleted);
+          },
+        }
+      );
+
+      if (response.data && response.data.url) {
+        if (isMainImage) {
+          setMainImageUrl(response.data.url);
+        } else {
+          setCloudinaryUrls([...cloudinaryUrls, response.data.url]);
+        }
+        return response.data.url;
+      }
+      return null;
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      setError("Failed to upload image. Please try again.");
+      return null;
+    }
+  };
+
+  const uploadAllImages = async () => {
+    setIsUploading(true);
+    setError(null);
+    setUploadProgress(0);
+
+    try {
+      // Upload main image if it exists
+      if (mainImage && mainImage instanceof File) {
+        await uploadImageToCloudinary(mainImage, true);
+      }
+
+      // Upload additional images
+      for (let i = 0; i < images.length; i++) {
+        if (!cloudinaryUrls[i]) {
+          await uploadImageToCloudinary(images[i]);
+        }
+      }
+
+      setUploadProgress(100);
+    } catch (error) {
+      console.error("Error uploading images:", error);
+      setError("Failed to upload some images. Please try again.");
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   return (
@@ -29,6 +119,12 @@ const Pictures = () => {
       <p className="text-black dark:text-gray-300 text-md drop-shadow-md">
         Add pictures to make your recipe stand out! 🌟
       </p>
+
+      {error && (
+        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+          {error}
+        </div>
+      )}
 
       <div className="mb-4 pt-8">
         <Input
@@ -50,7 +146,7 @@ const Pictures = () => {
                 style={{ position: "relative", width: "150px", height: "auto" }}
               >
                 <Image
-                  src={URL.createObjectURL(src)}
+                  src={cloudinaryUrls[index] || URL.createObjectURL(src)}
                   alt={`Image ${index}`}
                   style={{ width: "100%", height: "auto" }}
                 />
@@ -88,10 +184,34 @@ const Pictures = () => {
         <Spacer y={1} />
         {mainImage && mainImage instanceof File && (
           <Image
-            src={URL.createObjectURL(mainImage)}
+            src={mainImageUrl || URL.createObjectURL(mainImage)}
             alt="Main Display Image"
             style={{ width: "100%", maxWidth: "600px", height: "auto" }}
           />
+        )}
+      </div>
+
+      <div className="mt-6">
+        <Button 
+          color="primary" 
+          onClick={uploadAllImages} 
+          isLoading={isUploading}
+          disabled={isUploading || (images.length === 0 && !mainImage)}
+        >
+          {isUploading ? "Uploading..." : "Upload Images to Cloud"}
+        </Button>
+        
+        {isUploading && (
+          <div className="mt-4">
+            <Progress 
+              value={uploadProgress} 
+              color="primary" 
+              showValueLabel={true}
+            />
+            <p className="text-sm text-gray-500 mt-2">
+              Uploading images to Cloudinary... {uploadProgress}%
+            </p>
+          </div>
         )}
       </div>
     </>
