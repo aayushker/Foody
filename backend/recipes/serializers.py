@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Recipe, Ingredient, Instruction, NutritionalInfo
+from .models import Recipe, Ingredient, Instruction, NutritionalInfo, Image
 from django.contrib.auth.models import User
 
 class IngredientSerializer(serializers.ModelSerializer):
@@ -17,10 +17,16 @@ class NutritionalInfoSerializer(serializers.ModelSerializer):
         model = NutritionalInfo
         fields = ['calories', 'protein', 'fat', 'carbohydrates']
 
+class ImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Image
+        fields = ['id', 'image']
+
 class RecipeSerializer(serializers.ModelSerializer):
     ingredients = IngredientSerializer(many=True)
     instructions = serializers.CharField()
     nutritional_info = NutritionalInfoSerializer()
+    images = ImageSerializer(many=True, read_only=True)
 
     class Meta:
         model = Recipe
@@ -37,7 +43,8 @@ class RecipeSerializer(serializers.ModelSerializer):
             'ingredients', 
             'instructions', 
             'nutritional_info',
-            # 'main_image',  #baad mai add karna hai
+            'main_image',
+            'images',
         ]
 
     def create(self, validated_data):
@@ -94,6 +101,7 @@ class AllRecipeSerializer(serializers.ModelSerializer):
     ingredients = IngredientSerializer(many=True)
     instructions = InstructionSerializer(many=True)
     nutritional_info = NutritionalInfoSerializer()
+    images = ImageSerializer(many=True, read_only=True)
     username = serializers.SerializerMethodField()
 
     class Meta:
@@ -113,7 +121,8 @@ class AllRecipeSerializer(serializers.ModelSerializer):
             'ingredients', 
             'instructions', 
             'nutritional_info',
-            # 'main_image',  #baad mai add karna hai
+            'main_image',
+            'images',
         ]
         
     def get_username(self, obj):
